@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\BitmapConverter.cs" />
+    <Compile Include="Controllers\ImageQuantizer.cs" />
     <Compile Include="Presenters\Presenter.cs" />
     <Compile Include="Presenters\MainPresenter.cs" />
     <Compile Include="UI\MainForm.cs">
@@ -71,7 +72,6 @@
     <Compile Include="UI\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\ImageQuantizer.cs" />
     <Compile Include="Models\Pixel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
