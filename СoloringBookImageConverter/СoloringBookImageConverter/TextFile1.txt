@@ -1,0 +1,45 @@
+﻿ //сюда заходит каждый раз на исследованный регион
+                   /* if (regionsArray[h, w] != 0 && h+ minimalFontSize < height && w + minimalFontSize < width)  
+                    {
+                        //часть для расчета положения цифры цвета
+                        isFit = true; //допустим, что квадрат вписывается
+                        if (prewSquareIsFull) //если предыдущий квадрат был полон, то есть смысл изучить только последний столбец
+                        {
+                            squareWidth = w + minimalFontSize - 1; //отмечаем последний столбец
+                            for (int squareHeight = h; squareHeight < h + minimalFontSize; squareHeight++) //цикл по высоте квадрата
+                            {
+                                if (qByteIMG[0, h, w] != qByteIMG[0, squareHeight, squareWidth]
+                                 || qByteIMG[1, h, w] != qByteIMG[1, squareHeight, squareWidth]
+                                 || qByteIMG[2, h, w] != qByteIMG[2, squareHeight, squareWidth])
+                                {
+                                    isFit = false; //если цвет другой - значит квадтат не вписывается
+                                    goto End;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            for (int a = h; a < h + minimalFontSize; a++) //высота квадрата
+                            {
+                                for (squareWidth = w; squareWidth < w + minimalFontSize; squareWidth++) //ширина квадрата
+                                {
+                                    if (qByteIMG[0, h, w] != qByteIMG[0, a, squareWidth]
+                                     || qByteIMG[1, h, w] != qByteIMG[1, a, squareWidth]
+                                     || qByteIMG[2, h, w] != qByteIMG[2, a, squareWidth])
+                                    {
+                                        isFit = false;
+                                        goto End;
+                                    }
+                                }
+                            }
+                        }
+                        End:;
+                        //если квадрат вписывается - добавляем его левую-верхнюю координату к массиву координат для этого региона
+                        if (isFit) regions[regionsArray[h, w] - 1].FontsCoord.Add(new Point(h, w));
+                        prewSquareIsFull = isFit;
+                    }*/
+                    /*else
+                    {
+                        squaresCoord.RemoveAt(lastRegionIndex - 1);
+                        j--;
+                    }*/
