@@ -10,23 +10,20 @@ namespace СoloringBookImageConverter.UI {
     //для листа А4 рекомендуется ариал-8   гдето- 25х25 пикселей
     public partial class MainForm : Form, IMainView {
         Painter painter;
-
         public MainForm() {
             InitializeComponent();
-            btnProcessImage.Click += (sender, args) => Invoke(ProcessImage);
-            painter = new Painter(200, 25, 16);
-            pbOriginal.Image = new Bitmap("med.png");
+            btnProcessImage.Click += ProcessImage;
         }
         public void Showy() {
             Application.Run(this);
         }
 
+        public void ShowErrorMessage(string errorMessage) {
+            MessageBox.Show(errorMessage);
+        }
+
         public event EventHandler ProcessImage;
         public event EventHandler<ImagePathEventArgs> ImagePathChanged;
-
-        /*private void Invoke(Action action) {
-            if (action != null) action();
-        }*/
 
         public void SetOriginalImage(Bitmap bitmap) {
             pbOriginal.Image = bitmap;
@@ -40,20 +37,30 @@ namespace СoloringBookImageConverter.UI {
             pbResult.Image = bitmap;
         }
 
-        //квантизация
-        private void QuantizeImage(object sender, EventArgs e) {
-
+        private void openImageTSMI_Click(object sender, EventArgs e) {
+            openFileDialog.Filter = Resources.picture_format_filter;
+            openFileDialog.RestoreDirectory = true;
+            if (openFileDialog.ShowDialog() == DialogResult.OK) {
+                ImagePathChanged(this, new ImagePathEventArgs(openFileDialog.FileName));
+            }
         }
 
 
+        private void QuantizeImage(object sender, EventArgs e) {
+            progressBar.Value = 0;
+            bool useCustomPalette = checkBoxUseDatPalette.Checked;
+            BackgroundWorker backgroundWorker = new BackgroundWorker();
+            backgroundWorker.DoWork += DoWork;
+            backgroundWorker.RunWorkerAsync();
+            backgroundWorker.RunWorkerCompleted += delegate {
+                pbResult.Image = painter.getEdgesBitmap();
+                pbQuantize.Image = painter.getQuantizeBitmap();
+                //pictureBoxEdges.Image = painter.GetMedianImage(10);
+            };
 
-
-
-
-
-
-
-
+            //Thread threadGravity = new Thread(() => painter.makeEdgesImage(new Bitmap("med.png"), 0));
+            //threadGravity.Start();
+        }
 
 
 
@@ -103,7 +110,7 @@ namespace СoloringBookImageConverter.UI {
             var worker = sender as BackgroundWorker;
             e.Result = e.Argument;
 
-            painter.makeEdgesImage(new Bitmap("med.png"), 0);
+            painter.makeEdgesImage(new Bitmap("med1.png"), 0);
         }
 
         public void setText(String s) {
@@ -155,9 +162,12 @@ namespace СoloringBookImageConverter.UI {
         }
 
         private void pictureBoxOriginal_MouseMove(object sender, MouseEventArgs e) {
-            MouseEventArgs me = (MouseEventArgs)e;
-            Point coordinates = me.Location;
-            pictureBoxMouseColor.BackColor = ((Bitmap)pbOriginal.Image).GetPixel(coordinates.X, coordinates.Y);
+            if (pbOriginal.Image != null)
+            {
+                MouseEventArgs me = (MouseEventArgs) e;
+                Point coordinates = me.Location;
+                pictureBoxMouseColor.BackColor = ((Bitmap) pbOriginal.Image).GetPixel(coordinates.X, coordinates.Y);
+            }
         }
         //кликнул по клетке для удаления
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e) {
@@ -166,17 +176,8 @@ namespace СoloringBookImageConverter.UI {
             dataGridView1.ClearSelection();
         }
 
-        private void openImageTSMI_Click(object sender, EventArgs e) {
-            openFileDialog.Filter = Resources.picture_format_filter;
-            openFileDialog.RestoreDirectory = true;
-            if (openFileDialog.ShowDialog() == DialogResult.OK) {
-                ImagePathChanged(this, new ImagePathEventArgs(openFileDialog.FileName));
-            }
-        }
-
-        private void btnQuantizeImage_Click(object sender, EventArgs e)
-        {
-            
+        private void btnProcessImage_Click(object sender, EventArgs e) {
+            ProcessImage?.Invoke(this, new EventArgs());
         }
     }
 }

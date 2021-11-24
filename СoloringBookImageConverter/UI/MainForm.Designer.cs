@@ -221,7 +221,7 @@
             this.btnProcessImage.TabIndex = 17;
             this.btnProcessImage.Text = "Квантование + границы";
             this.btnProcessImage.UseVisualStyleBackColor = true;
-            this.btnProcessImage.Click += new System.EventHandler(this.btnQuantizeImage_Click);
+            this.btnProcessImage.Click += new System.EventHandler(this.btnProcessImage_Click);
             // 
             // toolTip1
             // 

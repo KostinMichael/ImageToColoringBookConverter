@@ -6,6 +6,7 @@ namespace СoloringBookImageConverter.UI {
         void SetOriginalImage(Bitmap bitmap);
         void SetSimplifiedImage(Bitmap bitmap);
         void SetResultImage(Bitmap bitmap);
+        void ShowErrorMessage(string errorMessage);
         event EventHandler ProcessImage;
         event EventHandler<ImagePathEventArgs> ImagePathChanged;
     }
