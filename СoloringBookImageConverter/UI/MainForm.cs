@@ -1,11 +1,14 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
+using СoloringBookImageConverter.Controllers;
+using СoloringBookImageConverter.Properties;
 
-namespace UI {
+namespace СoloringBookImageConverter.UI {
     //для листа А4 рекомендуется ариал-8   гдето- 25х25 пикселей
-    public partial class MainForm : Form, View {
+    public partial class MainForm : Form, IMainView {
         Painter painter;
 
         public MainForm() {
@@ -18,10 +21,12 @@ namespace UI {
             Application.Run(this);
         }
 
-        public event Action ProcessImage;
-        private void Invoke(Action action) {
+        public event EventHandler ProcessImage;
+        public event EventHandler<ImagePathEventArgs> ImagePathChanged;
+
+        /*private void Invoke(Action action) {
             if (action != null) action();
-        }
+        }*/
 
         public void SetOriginalImage(Bitmap bitmap) {
             pbOriginal.Image = bitmap;
@@ -35,28 +40,12 @@ namespace UI {
             pbResult.Image = bitmap;
         }
 
-        private void Form1_Load(object sender, EventArgs e) {
-            
-        }
-
         //квантизация
         private void QuantizeImage(object sender, EventArgs e) {
-            progressBar.Value = 0;
-            bool useCustomPalette = checkBoxUseDatPalette.Checked;
-            BackgroundWorker backgroundWorker = new BackgroundWorker();
-            backgroundWorker.DoWork += DoWork;
-            backgroundWorker.RunWorkerAsync();
-            backgroundWorker.RunWorkerCompleted += delegate {
-                pbResult.Image = painter.getEdgesBitmap();
-                pbQuantize.Image = painter.getQuantizeBitmap();
-                //pictureBoxEdges.Image = painter.GetMedianImage(10);
-            };
 
-            //Thread threadGravity = new Thread(() => painter.makeEdgesImage(new Bitmap("med.png"), 0));
-            //threadGravity.Start();
         }
 
-        
+
 
 
 
@@ -175,6 +164,19 @@ namespace UI {
             dataGridView1.Rows.Remove(dataGridView1.CurrentRow);
             dataGridView1.Columns[0].HeaderText = "Палитра " + (dataGridView1.RowCount).ToString();
             dataGridView1.ClearSelection();
+        }
+
+        private void openImageTSMI_Click(object sender, EventArgs e) {
+            openFileDialog.Filter = Resources.picture_format_filter;
+            openFileDialog.RestoreDirectory = true;
+            if (openFileDialog.ShowDialog() == DialogResult.OK) {
+                ImagePathChanged(this, new ImagePathEventArgs(openFileDialog.FileName));
+            }
+        }
+
+        private void btnQuantizeImage_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }

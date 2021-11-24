@@ -1,4 +1,4 @@
-﻿namespace UI
+﻿namespace СoloringBookImageConverter.UI
 {
     partial class MainForm
     {
@@ -70,10 +70,11 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.открытьИзображениеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openImageTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPalette)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbOriginal)).BeginInit();
             this.panel1.SuspendLayout();
@@ -220,7 +221,7 @@
             this.btnProcessImage.TabIndex = 17;
             this.btnProcessImage.Text = "Квантование + границы";
             this.btnProcessImage.UseVisualStyleBackColor = true;
-            this.btnProcessImage.Click += new System.EventHandler(this.QuantizeImage);
+            this.btnProcessImage.Click += new System.EventHandler(this.btnQuantizeImage_Click);
             // 
             // toolTip1
             // 
@@ -526,16 +527,17 @@
             // файлToolStripMenuItem
             // 
             this.файлToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.открытьИзображениеToolStripMenuItem});
+            this.openImageTSMI});
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
             this.файлToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.файлToolStripMenuItem.Text = "Файл";
             // 
-            // открытьИзображениеToolStripMenuItem
+            // openImageTSMI
             // 
-            this.открытьИзображениеToolStripMenuItem.Name = "открытьИзображениеToolStripMenuItem";
-            this.открытьИзображениеToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
-            this.открытьИзображениеToolStripMenuItem.Text = "Открыть изображение";
+            this.openImageTSMI.Name = "openImageTSMI";
+            this.openImageTSMI.Size = new System.Drawing.Size(198, 22);
+            this.openImageTSMI.Text = "Открыть изображение";
+            this.openImageTSMI.Click += new System.EventHandler(this.openImageTSMI_Click);
             // 
             // справкаToolStripMenuItem
             // 
@@ -561,7 +563,11 @@
             this.label7.TabIndex = 39;
             this.label7.Text = "Результат";
             // 
-            // Form1
+            // openFileDialog
+            // 
+            this.openFileDialog.FileName = "openFileDialog";
+            // 
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -584,9 +590,8 @@
             this.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPalette)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbOriginal)).EndInit();
             this.panel1.ResumeLayout(false);
@@ -661,10 +666,11 @@
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem файлToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem открытьИзображениеToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openImageTSMI;
         private System.Windows.Forms.ToolStripMenuItem справкаToolStripMenuItem;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
     }
 }
 

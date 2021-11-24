@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace UI
+namespace СoloringBookImageConverter.Controllers
 {
     public class BitmapConverter
     {

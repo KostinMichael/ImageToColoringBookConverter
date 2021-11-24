@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Model
+namespace СoloringBookImageConverter.Models
 {
     public class Pixel : Object , IComparable
     {
