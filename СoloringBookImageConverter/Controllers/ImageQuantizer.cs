@@ -1,10 +1,10 @@
-﻿using Model;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using СoloringBookImageConverter.Models;
 
-namespace UI
+namespace СoloringBookImageConverter.Controllers
 {
     class ImageQuantizer
     {

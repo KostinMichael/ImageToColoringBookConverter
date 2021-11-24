@@ -1,15 +1,22 @@
-﻿using UI;
+﻿using System;
+using СoloringBookImageConverter.UI;
 
-namespace Presenters{
-    class MainPresenter : Presenter {
-        private View Form;
+namespace СoloringBookImageConverter.Presenters{
+    class MainPresenter : IPresenter {
+        private IMainView mainForm;
 
-        public MainPresenter(View form) {
-            this.Form = form;
+        public MainPresenter(IMainView view) {
+            view.ImagePathChanged += new EventHandler<ImagePathEventArgs>(ImagePathChanged);
+            this.mainForm = view;
         }
 
         public void Run() {
-            Form.Showy();
+            mainForm.Showy();
+        }
+
+        public static void ImagePathChanged(Object sender, ImagePathEventArgs e)
+        {
+            string s = e.FilePath;
         }
     }
 }

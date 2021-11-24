@@ -1,11 +1,13 @@
-﻿using Presenters;
+﻿using СoloringBookImageConverter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using СoloringBookImageConverter.Presenters;
+using СoloringBookImageConverter.UI;
 
-namespace UI
+namespace СoloringBookImageConverter
 {
     static class Program
     {
