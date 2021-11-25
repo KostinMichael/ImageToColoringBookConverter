@@ -67,8 +67,10 @@
   <ItemGroup>
     <Compile Include="Controllers\BitmapConverter.cs" />
     <Compile Include="Controllers\ImageQuantizer.cs" />
+    <Compile Include="Exceptions\InvalidArgumentException.cs" />
     <Compile Include="Presenters\IPresenter.cs" />
     <Compile Include="Presenters\MainPresenter.cs" />
+    <Compile Include="UI\TrackBarEventArgs.cs" />
     <Compile Include="UI\ImagePathEventArgs.cs" />
     <Compile Include="UI\MainForm.cs">
       <SubType>Form</SubType>

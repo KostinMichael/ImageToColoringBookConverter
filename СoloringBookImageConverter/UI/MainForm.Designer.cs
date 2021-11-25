@@ -29,9 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.trackBarPalette = new System.Windows.Forms.TrackBar();
-            this.textBoxPaletteSize = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.trbPaletteSize = new System.Windows.Forms.TrackBar();
+            this.labelPaletteSize = new System.Windows.Forms.Label();
             this.pbOriginal = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.trackBarPBCr = new System.Windows.Forms.TrackBar();
@@ -46,9 +45,8 @@
             this.pbQuantize = new System.Windows.Forms.PictureBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.pbResult = new System.Windows.Forms.PictureBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.trackBarBlure = new System.Windows.Forms.TrackBar();
+            this.labelBlur = new System.Windows.Forms.Label();
+            this.trbBlur = new System.Windows.Forms.TrackBar();
             this.label3 = new System.Windows.Forms.Label();
             this.textBoxEdgesWight = new System.Windows.Forms.TextBox();
             this.trackBarEdgesWight = new System.Windows.Forms.TrackBar();
@@ -69,13 +67,18 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fileTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.openImageTSMI = new System.Windows.Forms.ToolStripMenuItem();
-            this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.quantizedImageTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.resultImageTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.paletteImageTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarPalette)).BeginInit();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            ((System.ComponentModel.ISupportInitialize)(this.trbPaletteSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbOriginal)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPBCr)).BeginInit();
@@ -85,7 +88,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbQuantize)).BeginInit();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResult)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarBlure)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trbBlur)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarEdgesWight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarRegionSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -97,37 +100,28 @@
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // trackBarPalette
+            // trbPaletteSize
             // 
-            this.trackBarPalette.BackColor = System.Drawing.SystemColors.HighlightText;
-            this.trackBarPalette.LargeChange = 2;
-            this.trackBarPalette.Location = new System.Drawing.Point(6, 23);
-            this.trackBarPalette.Maximum = 50;
-            this.trackBarPalette.Minimum = 1;
-            this.trackBarPalette.Name = "trackBarPalette";
-            this.trackBarPalette.Size = new System.Drawing.Size(274, 45);
-            this.trackBarPalette.TabIndex = 3;
-            this.trackBarPalette.TickFrequency = 10;
-            this.trackBarPalette.TickStyle = System.Windows.Forms.TickStyle.Both;
-            this.trackBarPalette.Value = 16;
-            this.trackBarPalette.ValueChanged += new System.EventHandler(this.trackBarPalette_ValueChanged);
+            this.trbPaletteSize.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.trbPaletteSize.LargeChange = 2;
+            this.trbPaletteSize.Location = new System.Drawing.Point(6, 23);
+            this.trbPaletteSize.Maximum = 100;
+            this.trbPaletteSize.Minimum = 1;
+            this.trbPaletteSize.Name = "trbPaletteSize";
+            this.trbPaletteSize.Size = new System.Drawing.Size(200, 45);
+            this.trbPaletteSize.TabIndex = 3;
+            this.trbPaletteSize.TickFrequency = 10;
+            this.trbPaletteSize.Value = 16;
+            this.trbPaletteSize.ValueChanged += new System.EventHandler(this.trbPaletteSize_ValueChanged);
             // 
-            // textBoxPaletteSize
+            // labelPaletteSize
             // 
-            this.textBoxPaletteSize.Location = new System.Drawing.Point(286, 23);
-            this.textBoxPaletteSize.Name = "textBoxPaletteSize";
-            this.textBoxPaletteSize.Size = new System.Drawing.Size(49, 20);
-            this.textBoxPaletteSize.TabIndex = 4;
-            this.textBoxPaletteSize.Text = "16";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 3);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(132, 13);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "Кол-во цветов в палитре";
+            this.labelPaletteSize.AutoSize = true;
+            this.labelPaletteSize.Location = new System.Drawing.Point(6, 7);
+            this.labelPaletteSize.Name = "labelPaletteSize";
+            this.labelPaletteSize.Size = new System.Drawing.Size(150, 13);
+            this.labelPaletteSize.TabIndex = 5;
+            this.labelPaletteSize.Text = "Кол-во цветов в палитре: 16";
             // 
             // pbOriginal
             // 
@@ -153,7 +147,7 @@
             // trackBarPBCr
             // 
             this.trackBarPBCr.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.trackBarPBCr.Location = new System.Drawing.Point(6, 74);
+            this.trackBarPBCr.Location = new System.Drawing.Point(6, 105);
             this.trackBarPBCr.Maximum = 100;
             this.trackBarPBCr.Minimum = 1;
             this.trackBarPBCr.Name = "trackBarPBCr";
@@ -166,7 +160,7 @@
             // trackBarPBCg
             // 
             this.trackBarPBCg.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.trackBarPBCg.Location = new System.Drawing.Point(6, 125);
+            this.trackBarPBCg.Location = new System.Drawing.Point(144, 88);
             this.trackBarPBCg.Maximum = 100;
             this.trackBarPBCg.Minimum = 1;
             this.trackBarPBCg.Name = "trackBarPBCg";
@@ -179,7 +173,7 @@
             // trackBarPBCb
             // 
             this.trackBarPBCb.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.trackBarPBCb.Location = new System.Drawing.Point(6, 176);
+            this.trackBarPBCb.Location = new System.Drawing.Point(276, 88);
             this.trackBarPBCb.Maximum = 100;
             this.trackBarPBCb.Minimum = 1;
             this.trackBarPBCb.Name = "trackBarPBCb";
@@ -191,31 +185,31 @@
             // 
             // textBoxPBCr
             // 
-            this.textBoxPBCr.Location = new System.Drawing.Point(113, 74);
+            this.textBoxPBCr.Location = new System.Drawing.Point(116, 88);
             this.textBoxPBCr.Name = "textBoxPBCr";
-            this.textBoxPBCr.Size = new System.Drawing.Size(35, 20);
+            this.textBoxPBCr.Size = new System.Drawing.Size(22, 20);
             this.textBoxPBCr.TabIndex = 11;
             this.textBoxPBCr.Text = "30";
             // 
             // textBoxPBCg
             // 
-            this.textBoxPBCg.Location = new System.Drawing.Point(113, 125);
+            this.textBoxPBCg.Location = new System.Drawing.Point(251, 88);
             this.textBoxPBCg.Name = "textBoxPBCg";
-            this.textBoxPBCg.Size = new System.Drawing.Size(35, 20);
+            this.textBoxPBCg.Size = new System.Drawing.Size(19, 20);
             this.textBoxPBCg.TabIndex = 12;
             this.textBoxPBCg.Text = "59";
             // 
             // textBoxPBCb
             // 
-            this.textBoxPBCb.Location = new System.Drawing.Point(113, 176);
+            this.textBoxPBCb.Location = new System.Drawing.Point(383, 88);
             this.textBoxPBCb.Name = "textBoxPBCb";
-            this.textBoxPBCb.Size = new System.Drawing.Size(35, 20);
+            this.textBoxPBCb.Size = new System.Drawing.Size(21, 20);
             this.textBoxPBCb.TabIndex = 13;
             this.textBoxPBCb.Text = "11";
             // 
             // btnProcessImage
             // 
-            this.btnProcessImage.Location = new System.Drawing.Point(436, 484);
+            this.btnProcessImage.Location = new System.Drawing.Point(478, 482);
             this.btnProcessImage.Name = "btnProcessImage";
             this.btnProcessImage.Size = new System.Drawing.Size(180, 28);
             this.btnProcessImage.TabIndex = 17;
@@ -266,35 +260,26 @@
             this.pbResult.TabIndex = 6;
             this.pbResult.TabStop = false;
             // 
-            // label2
+            // labelBlur
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(439, 359);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(152, 13);
-            this.label2.TabIndex = 20;
-            this.label2.Text = "Предварительное размытие";
+            this.labelBlur.AutoSize = true;
+            this.labelBlur.Location = new System.Drawing.Point(207, 7);
+            this.labelBlur.Name = "labelBlur";
+            this.labelBlur.Size = new System.Drawing.Size(164, 13);
+            this.labelBlur.TabIndex = 20;
+            this.labelBlur.Text = "Предварительное размытие: 0";
             // 
-            // textBox1
+            // trbBlur
             // 
-            this.textBox1.Location = new System.Drawing.Point(732, 375);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(49, 20);
-            this.textBox1.TabIndex = 19;
-            this.textBox1.Text = "10";
-            // 
-            // trackBarBlure
-            // 
-            this.trackBarBlure.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.trackBarBlure.LargeChange = 2;
-            this.trackBarBlure.Location = new System.Drawing.Point(436, 375);
-            this.trackBarBlure.Maximum = 50;
-            this.trackBarBlure.Minimum = 1;
-            this.trackBarBlure.Name = "trackBarBlure";
-            this.trackBarBlure.Size = new System.Drawing.Size(290, 45);
-            this.trackBarBlure.TabIndex = 18;
-            this.trackBarBlure.TickFrequency = 10;
-            this.trackBarBlure.Value = 10;
+            this.trbBlur.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.trbBlur.LargeChange = 2;
+            this.trbBlur.Location = new System.Drawing.Point(210, 23);
+            this.trbBlur.Maximum = 50;
+            this.trbBlur.Name = "trbBlur";
+            this.trbBlur.Size = new System.Drawing.Size(200, 45);
+            this.trbBlur.TabIndex = 18;
+            this.trbBlur.TickFrequency = 10;
+            this.trbBlur.ValueChanged += new System.EventHandler(this.trbBlur_ValueChanged);
             // 
             // label3
             // 
@@ -330,14 +315,14 @@
             // 
             // textBoxInfo
             // 
-            this.textBoxInfo.Location = new System.Drawing.Point(435, 428);
+            this.textBoxInfo.Location = new System.Drawing.Point(477, 426);
             this.textBoxInfo.Name = "textBoxInfo";
             this.textBoxInfo.Size = new System.Drawing.Size(180, 20);
             this.textBoxInfo.TabIndex = 25;
             // 
             // progressBar
             // 
-            this.progressBar.Location = new System.Drawing.Point(435, 451);
+            this.progressBar.Location = new System.Drawing.Point(477, 449);
             this.progressBar.Maximum = 6;
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(179, 23);
@@ -375,7 +360,6 @@
             this.buttonEdges.TabIndex = 31;
             this.buttonEdges.Text = "Границы";
             this.buttonEdges.UseVisualStyleBackColor = true;
-            this.buttonEdges.Click += new System.EventHandler(this.buttonEdges_Click);
             // 
             // label4
             // 
@@ -461,24 +445,25 @@
             this.tabControl1.Location = new System.Drawing.Point(15, 355);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(415, 258);
+            this.tabControl1.Size = new System.Drawing.Size(423, 258);
             this.tabControl1.TabIndex = 36;
             // 
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.textBoxPBCb);
-            this.tabPage1.Controls.Add(this.label1);
+            this.tabPage1.Controls.Add(this.labelPaletteSize);
             this.tabPage1.Controls.Add(this.trackBarPBCr);
-            this.tabPage1.Controls.Add(this.trackBarPalette);
+            this.tabPage1.Controls.Add(this.trbPaletteSize);
             this.tabPage1.Controls.Add(this.trackBarPBCg);
-            this.tabPage1.Controls.Add(this.textBoxPaletteSize);
             this.tabPage1.Controls.Add(this.textBoxPBCg);
+            this.tabPage1.Controls.Add(this.labelBlur);
             this.tabPage1.Controls.Add(this.trackBarPBCb);
+            this.tabPage1.Controls.Add(this.trbBlur);
             this.tabPage1.Controls.Add(this.textBoxPBCr);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(407, 232);
+            this.tabPage1.Size = new System.Drawing.Size(415, 232);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Настройка палитры";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -495,7 +480,7 @@
             this.tabPage2.Controls.Add(this.label3);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Size = new System.Drawing.Size(407, 232);
+            this.tabPage2.Size = new System.Drawing.Size(415, 232);
             this.tabPage2.TabIndex = 2;
             this.tabPage2.Text = "Границы и области";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -508,7 +493,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(407, 232);
+            this.tabPage3.Size = new System.Drawing.Size(415, 232);
             this.tabPage3.TabIndex = 1;
             this.tabPage3.Text = "Ручная палитра";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -516,21 +501,22 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.файлToolStripMenuItem,
-            this.справкаToolStripMenuItem});
+            this.fileTSMI,
+            this.aboutTSMI});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(788, 24);
             this.menuStrip1.TabIndex = 37;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // файлToolStripMenuItem
+            // fileTSMI
             // 
-            this.файлToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openImageTSMI});
-            this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
-            this.файлToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
-            this.файлToolStripMenuItem.Text = "Файл";
+            this.fileTSMI.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openImageTSMI,
+            this.saveTSMI});
+            this.fileTSMI.Name = "fileTSMI";
+            this.fileTSMI.Size = new System.Drawing.Size(48, 20);
+            this.fileTSMI.Text = "Файл";
             // 
             // openImageTSMI
             // 
@@ -539,11 +525,39 @@
             this.openImageTSMI.Text = "Открыть изображение";
             this.openImageTSMI.Click += new System.EventHandler(this.openImageTSMI_Click);
             // 
-            // справкаToolStripMenuItem
+            // saveTSMI
             // 
-            this.справкаToolStripMenuItem.Name = "справкаToolStripMenuItem";
-            this.справкаToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
-            this.справкаToolStripMenuItem.Text = "Справка";
+            this.saveTSMI.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.quantizedImageTSMI,
+            this.resultImageTSMI,
+            this.paletteImageTSMI});
+            this.saveTSMI.Name = "saveTSMI";
+            this.saveTSMI.Size = new System.Drawing.Size(198, 22);
+            this.saveTSMI.Text = "Сохранить";
+            // 
+            // quantizedImageTSMI
+            // 
+            this.quantizedImageTSMI.Name = "quantizedImageTSMI";
+            this.quantizedImageTSMI.Size = new System.Drawing.Size(253, 22);
+            this.quantizedImageTSMI.Text = "Упрощённое изображение";
+            // 
+            // resultImageTSMI
+            // 
+            this.resultImageTSMI.Name = "resultImageTSMI";
+            this.resultImageTSMI.Size = new System.Drawing.Size(253, 22);
+            this.resultImageTSMI.Text = "Результирующиее изображение";
+            // 
+            // paletteImageTSMI
+            // 
+            this.paletteImageTSMI.Name = "paletteImageTSMI";
+            this.paletteImageTSMI.Size = new System.Drawing.Size(253, 22);
+            this.paletteImageTSMI.Text = "Упрощённую палитру";
+            // 
+            // aboutTSMI
+            // 
+            this.aboutTSMI.Name = "aboutTSMI";
+            this.aboutTSMI.Size = new System.Drawing.Size(65, 20);
+            this.aboutTSMI.Text = "Справка";
             // 
             // label6
             // 
@@ -580,9 +594,6 @@
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.btnProcessImage);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.trackBarBlure);
-            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -592,7 +603,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarPalette)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trbPaletteSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbOriginal)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -605,7 +616,7 @@
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResult)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarBlure)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trbBlur)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarEdgesWight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarRegionSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -625,9 +636,8 @@
         }
 
         #endregion
-        private System.Windows.Forms.TrackBar trackBarPalette;
-        private System.Windows.Forms.TextBox textBoxPaletteSize;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TrackBar trbPaletteSize;
+        private System.Windows.Forms.Label labelPaletteSize;
         private System.Windows.Forms.PictureBox pbOriginal;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TrackBar trackBarPBCr;
@@ -642,9 +652,8 @@
         private System.Windows.Forms.PictureBox pbQuantize;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.PictureBox pbResult;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TrackBar trackBarBlure;
+        private System.Windows.Forms.Label labelBlur;
+        private System.Windows.Forms.TrackBar trbBlur;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBoxEdgesWight;
         private System.Windows.Forms.TrackBar trackBarEdgesWight;
@@ -665,12 +674,17 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem файлToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem fileTSMI;
         private System.Windows.Forms.ToolStripMenuItem openImageTSMI;
-        private System.Windows.Forms.ToolStripMenuItem справкаToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutTSMI;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
+        private System.Windows.Forms.ToolStripMenuItem saveTSMI;
+        private System.Windows.Forms.ToolStripMenuItem quantizedImageTSMI;
+        private System.Windows.Forms.ToolStripMenuItem resultImageTSMI;
+        private System.Windows.Forms.ToolStripMenuItem paletteImageTSMI;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }
 

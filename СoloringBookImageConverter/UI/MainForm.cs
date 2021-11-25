@@ -9,73 +9,20 @@ using СoloringBookImageConverter.Properties;
 namespace СoloringBookImageConverter.UI {
     //для листа А4 рекомендуется ариал-8   гдето- 25х25 пикселей
     public partial class MainForm : Form, IMainView {
-        Painter painter;
-        public MainForm() {
-            InitializeComponent();
-            btnProcessImage.Click += ProcessImage;
-        }
-        public void Showy() {
-            Application.Run(this);
-        }
-
-        public void ShowErrorMessage(string errorMessage) {
-            MessageBox.Show(errorMessage);
-        }
-
         public event EventHandler ProcessImage;
         public event EventHandler<ImagePathEventArgs> ImagePathChanged;
+        public event EventHandler<TrackBarEventArgs> BlurDegreeChanged;
+        public event EventHandler<TrackBarEventArgs> PaletteSizeChanged;
 
-        public void SetOriginalImage(Bitmap bitmap) {
-            pbOriginal.Image = bitmap;
+        public MainForm() {
+            InitializeComponent();
         }
 
-        public void SetSimplifiedImage(Bitmap bitmap) {
-            pbQuantize.Image = bitmap;
-        }
-
-        public void SetResultImage(Bitmap bitmap) {
-            pbResult.Image = bitmap;
-        }
-
-        private void openImageTSMI_Click(object sender, EventArgs e) {
-            openFileDialog.Filter = Resources.picture_format_filter;
-            openFileDialog.RestoreDirectory = true;
-            if (openFileDialog.ShowDialog() == DialogResult.OK) {
-                ImagePathChanged(this, new ImagePathEventArgs(openFileDialog.FileName));
-            }
-        }
-
-
-        private void QuantizeImage(object sender, EventArgs e) {
-            progressBar.Value = 0;
-            bool useCustomPalette = checkBoxUseDatPalette.Checked;
-            BackgroundWorker backgroundWorker = new BackgroundWorker();
-            backgroundWorker.DoWork += DoWork;
-            backgroundWorker.RunWorkerAsync();
-            backgroundWorker.RunWorkerCompleted += delegate {
-                pbResult.Image = painter.getEdgesBitmap();
-                pbQuantize.Image = painter.getQuantizeBitmap();
-                //pictureBoxEdges.Image = painter.GetMedianImage(10);
-            };
-
-            //Thread threadGravity = new Thread(() => painter.makeEdgesImage(new Bitmap("med.png"), 0));
-            //threadGravity.Start();
-        }
-
-
-
+        //-------------------legacy------------------
         //клик по квантизированной картинке сохраняет её
         private void pictureBoxQuantize_Click(object sender, EventArgs e) {
             pbQuantize.Image.Save("1dfg.jpg");
             pbResult.Image.Save("dfghdfh.jpg");
-        }
-
-        //изменение размера палитры
-        private void trackBarPalette_ValueChanged(object sender, EventArgs e) {
-            trackBarPalette.MouseCaptureChanged += delegate {
-                painter.SetPaletteSize(trackBarPalette.Value);
-            };
-            textBoxPaletteSize.Text = trackBarPalette.Value.ToString();
         }
         //изменение минимального размера регионов
         private void trackBarRegionSize_ValueChanged(object sender, EventArgs e) {
@@ -105,48 +52,10 @@ namespace СoloringBookImageConverter.UI {
             textBoxPBCb.Text = trackBarPBCb.Value.ToString();
         }
 
-
-        private void DoWork(object sender, DoWorkEventArgs e) {
-            var worker = sender as BackgroundWorker;
-            e.Result = e.Argument;
-
-            painter.makeEdgesImage(new Bitmap("med1.png"), 0);
-        }
-
-        public void setText(String s) {
-            if (InvokeRequired) {
-                BeginInvoke(new Action(() => textBoxInfo.Text = s));
-                // BeginInvoke(new Action(() => progressBar1.Value += 1));
-            } else {
-                textBoxInfo.Text = s;
-                //  progressBar1.Value += 1;
-            }
-        }
-
-        public void setOutpuImage(Bitmap bmp) {
-            if (InvokeRequired) {
-                BeginInvoke(new Action(() => pbQuantize.Image = bmp));
-            } else {
-                pbQuantize.Image = bmp;
-            }
-        }
-
-        public void setOutputEdges(Bitmap bmp) {
-            if (InvokeRequired) {
-                BeginInvoke(new Action(() => pbResult.Image = bmp));
-            } else {
-                pbResult.Image = bmp;
-            }
-        }
-
         private void buttonRegions_Click(object sender, EventArgs e) {
             int ggg = trackBarRegionSize.Value;
             //Thread threadGravity = new Thread(() => imageQuantizer.refreshEdges(ggg));
             //threadGravity.Start();
-        }
-
-        private void buttonEdges_Click(object sender, EventArgs e) {
-            //fdfkhnl вшашту
         }
 
         private void pictureBoxOriginal_Click(object sender, EventArgs e) {
@@ -162,22 +71,64 @@ namespace СoloringBookImageConverter.UI {
         }
 
         private void pictureBoxOriginal_MouseMove(object sender, MouseEventArgs e) {
-            if (pbOriginal.Image != null)
-            {
-                MouseEventArgs me = (MouseEventArgs) e;
+            if (pbOriginal.Image != null) {
+                MouseEventArgs me = (MouseEventArgs)e;
                 Point coordinates = me.Location;
-                pictureBoxMouseColor.BackColor = ((Bitmap) pbOriginal.Image).GetPixel(coordinates.X, coordinates.Y);
+                pictureBoxMouseColor.BackColor = ((Bitmap)pbOriginal.Image).GetPixel(coordinates.X, coordinates.Y);
             }
         }
+
         //кликнул по клетке для удаления
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e) {
             dataGridView1.Rows.Remove(dataGridView1.CurrentRow);
             dataGridView1.Columns[0].HeaderText = "Палитра " + (dataGridView1.RowCount).ToString();
             dataGridView1.ClearSelection();
         }
+        //-------------------legacy------------------
 
+
+
+
+
+
+        public void Showy() {
+            Application.Run(this);
+        }
+
+        public void ShowErrorMessage(string errorMessage) {
+            MessageBox.Show(errorMessage);
+        }
+
+        public void SetOriginalImage(Bitmap bitmap) {
+            pbOriginal.Image = bitmap;
+        }
+
+        public void SetSimplifiedImage(Bitmap bitmap) {
+            pbQuantize.Image = bitmap;
+        }
+
+        public void SetResultImage(Bitmap bitmap) {
+            pbResult.Image = bitmap;
+        }
         private void btnProcessImage_Click(object sender, EventArgs e) {
             ProcessImage?.Invoke(this, new EventArgs());
+        }
+
+        private void openImageTSMI_Click(object sender, EventArgs e) {
+            openFileDialog.Filter = Resources.picture_format_filter;
+            openFileDialog.RestoreDirectory = true;
+            if (openFileDialog.ShowDialog() == DialogResult.OK) {
+                ImagePathChanged?.Invoke(this, new ImagePathEventArgs(openFileDialog.FileName));
+            }
+        }
+
+        private void trbBlur_ValueChanged(object sender, EventArgs e) {
+            BlurDegreeChanged?.Invoke(this, new TrackBarEventArgs(trbBlur.Value));
+            labelBlur.Text = Resources.trb_blur + trbBlur.Value;
+        }
+        private void trbPaletteSize_ValueChanged(object sender, EventArgs e) {
+            labelPaletteSize.Text = Resources.trb_palette_size + trbPaletteSize.Value;
+            PaletteSizeChanged?.Invoke(this, new TrackBarEventArgs(trbPaletteSize.Value));
         }
     }
 }

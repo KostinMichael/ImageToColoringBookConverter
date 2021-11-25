@@ -9,5 +9,7 @@ namespace СoloringBookImageConverter.UI {
         void ShowErrorMessage(string errorMessage);
         event EventHandler ProcessImage;
         event EventHandler<ImagePathEventArgs> ImagePathChanged;
+        event EventHandler<TrackBarEventArgs> BlurDegreeChanged;
+        event EventHandler<TrackBarEventArgs> PaletteSizeChanged;
     }
 }

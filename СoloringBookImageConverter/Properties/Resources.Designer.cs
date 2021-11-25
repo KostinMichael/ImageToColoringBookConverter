@@ -68,5 +68,23 @@ namespace СoloringBookImageConverter.Properties {
                 return ResourceManager.GetString("picture_format_filter", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Предварительное размытие: .
+        /// </summary>
+        internal static string trb_blur {
+            get {
+                return ResourceManager.GetString("trb_blur", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Кол-во цветов в палитре.
+        /// </summary>
+        internal static string trb_palette_size {
+            get {
+                return ResourceManager.GetString("trb_palette_size", resourceCulture);
+            }
+        }
     }
 }
