@@ -33,13 +33,9 @@
             this.labelPaletteSize = new System.Windows.Forms.Label();
             this.pbOriginal = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.trackBarPBCr = new System.Windows.Forms.TrackBar();
-            this.trackBarPBCg = new System.Windows.Forms.TrackBar();
-            this.trackBarPBCb = new System.Windows.Forms.TrackBar();
-            this.textBoxPBCr = new System.Windows.Forms.TextBox();
-            this.textBoxPBCg = new System.Windows.Forms.TextBox();
-            this.textBoxPBCb = new System.Windows.Forms.TextBox();
-            this.btnProcessImage = new System.Windows.Forms.Button();
+            this.trbPBCr = new System.Windows.Forms.TrackBar();
+            this.trbPBCg = new System.Windows.Forms.TrackBar();
+            this.trbPBCb = new System.Windows.Forms.TrackBar();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.panel2 = new System.Windows.Forms.Panel();
             this.pbQuantize = new System.Windows.Forms.PictureBox();
@@ -47,16 +43,11 @@
             this.pbResult = new System.Windows.Forms.PictureBox();
             this.labelBlur = new System.Windows.Forms.Label();
             this.trbBlur = new System.Windows.Forms.TrackBar();
-            this.label3 = new System.Windows.Forms.Label();
-            this.textBoxEdgesWight = new System.Windows.Forms.TextBox();
-            this.trackBarEdgesWight = new System.Windows.Forms.TrackBar();
-            this.textBoxInfo = new System.Windows.Forms.TextBox();
+            this.labelLineThickness = new System.Windows.Forms.Label();
+            this.trbLineThickness = new System.Windows.Forms.TrackBar();
             this.progressBar = new System.Windows.Forms.ProgressBar();
-            this.trackBarRegionSize = new System.Windows.Forms.TrackBar();
-            this.buttonRegions = new System.Windows.Forms.Button();
-            this.buttonEdges = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
-            this.textBoxRegionSize = new System.Windows.Forms.TextBox();
+            this.trbMinSquare = new System.Windows.Forms.TrackBar();
+            this.labelMinSquare = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.palette = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pictureBoxMouseColor = new System.Windows.Forms.PictureBox();
@@ -64,7 +55,9 @@
             this.label5 = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.labelPBCb = new System.Windows.Forms.Label();
+            this.labelPBCg = new System.Windows.Forms.Label();
+            this.labelPBCr = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileTSMI = new System.Windows.Forms.ToolStripMenuItem();
@@ -73,6 +66,10 @@
             this.quantizedImageTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.resultImageTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.paletteImageTSMI = new System.Windows.Forms.ToolStripMenuItem();
+            this.конвертироватьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.конвертироватьToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.обновитьЛинииToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.обновитьОбластиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutTSMI = new System.Windows.Forms.ToolStripMenuItem();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -81,21 +78,20 @@
             ((System.ComponentModel.ISupportInitialize)(this.trbPaletteSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbOriginal)).BeginInit();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarPBCr)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarPBCg)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarPBCb)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trbPBCr)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trbPBCg)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trbPBCb)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbQuantize)).BeginInit();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResult)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trbBlur)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarEdgesWight)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarRegionSize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trbLineThickness)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trbMinSquare)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMouseColor)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -139,83 +135,49 @@
             this.panel1.AutoScroll = true;
             this.panel1.BackColor = System.Drawing.SystemColors.HighlightText;
             this.panel1.Controls.Add(this.pbOriginal);
-            this.panel1.Location = new System.Drawing.Point(15, 49);
+            this.panel1.Location = new System.Drawing.Point(12, 49);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(250, 300);
+            this.panel1.Size = new System.Drawing.Size(210, 210);
             this.panel1.TabIndex = 7;
             // 
-            // trackBarPBCr
+            // trbPBCr
             // 
-            this.trackBarPBCr.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.trackBarPBCr.Location = new System.Drawing.Point(6, 105);
-            this.trackBarPBCr.Maximum = 100;
-            this.trackBarPBCr.Minimum = 1;
-            this.trackBarPBCr.Name = "trackBarPBCr";
-            this.trackBarPBCr.Size = new System.Drawing.Size(101, 45);
-            this.trackBarPBCr.TabIndex = 8;
-            this.trackBarPBCr.TickFrequency = 10;
-            this.trackBarPBCr.Value = 30;
-            this.trackBarPBCr.ValueChanged += new System.EventHandler(this.PBCtrackbarChange);
+            this.trbPBCr.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.trbPBCr.Location = new System.Drawing.Point(9, 98);
+            this.trbPBCr.Maximum = 100;
+            this.trbPBCr.Minimum = 1;
+            this.trbPBCr.Name = "trbPBCr";
+            this.trbPBCr.Size = new System.Drawing.Size(127, 45);
+            this.trbPBCr.TabIndex = 8;
+            this.trbPBCr.TickFrequency = 10;
+            this.trbPBCr.Value = 30;
+            this.trbPBCr.ValueChanged += new System.EventHandler(this.trbPCBr_ValueChanged);
             // 
-            // trackBarPBCg
+            // trbPBCg
             // 
-            this.trackBarPBCg.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.trackBarPBCg.Location = new System.Drawing.Point(144, 88);
-            this.trackBarPBCg.Maximum = 100;
-            this.trackBarPBCg.Minimum = 1;
-            this.trackBarPBCg.Name = "trackBarPBCg";
-            this.trackBarPBCg.Size = new System.Drawing.Size(101, 45);
-            this.trackBarPBCg.TabIndex = 9;
-            this.trackBarPBCg.TickFrequency = 10;
-            this.trackBarPBCg.Value = 59;
-            this.trackBarPBCg.ValueChanged += new System.EventHandler(this.PBCtrackbarChange);
+            this.trbPBCg.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.trbPBCg.Location = new System.Drawing.Point(145, 98);
+            this.trbPBCg.Maximum = 100;
+            this.trbPBCg.Minimum = 1;
+            this.trbPBCg.Name = "trbPBCg";
+            this.trbPBCg.Size = new System.Drawing.Size(127, 45);
+            this.trbPBCg.TabIndex = 9;
+            this.trbPBCg.TickFrequency = 10;
+            this.trbPBCg.Value = 59;
+            this.trbPBCg.ValueChanged += new System.EventHandler(this.trbPCBg_ValueChanged);
             // 
-            // trackBarPBCb
+            // trbPBCb
             // 
-            this.trackBarPBCb.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.trackBarPBCb.Location = new System.Drawing.Point(276, 88);
-            this.trackBarPBCb.Maximum = 100;
-            this.trackBarPBCb.Minimum = 1;
-            this.trackBarPBCb.Name = "trackBarPBCb";
-            this.trackBarPBCb.Size = new System.Drawing.Size(101, 45);
-            this.trackBarPBCb.TabIndex = 10;
-            this.trackBarPBCb.TickFrequency = 10;
-            this.trackBarPBCb.Value = 11;
-            this.trackBarPBCb.ValueChanged += new System.EventHandler(this.PBCtrackbarChange);
-            // 
-            // textBoxPBCr
-            // 
-            this.textBoxPBCr.Location = new System.Drawing.Point(116, 88);
-            this.textBoxPBCr.Name = "textBoxPBCr";
-            this.textBoxPBCr.Size = new System.Drawing.Size(22, 20);
-            this.textBoxPBCr.TabIndex = 11;
-            this.textBoxPBCr.Text = "30";
-            // 
-            // textBoxPBCg
-            // 
-            this.textBoxPBCg.Location = new System.Drawing.Point(251, 88);
-            this.textBoxPBCg.Name = "textBoxPBCg";
-            this.textBoxPBCg.Size = new System.Drawing.Size(19, 20);
-            this.textBoxPBCg.TabIndex = 12;
-            this.textBoxPBCg.Text = "59";
-            // 
-            // textBoxPBCb
-            // 
-            this.textBoxPBCb.Location = new System.Drawing.Point(383, 88);
-            this.textBoxPBCb.Name = "textBoxPBCb";
-            this.textBoxPBCb.Size = new System.Drawing.Size(21, 20);
-            this.textBoxPBCb.TabIndex = 13;
-            this.textBoxPBCb.Text = "11";
-            // 
-            // btnProcessImage
-            // 
-            this.btnProcessImage.Location = new System.Drawing.Point(478, 482);
-            this.btnProcessImage.Name = "btnProcessImage";
-            this.btnProcessImage.Size = new System.Drawing.Size(180, 28);
-            this.btnProcessImage.TabIndex = 17;
-            this.btnProcessImage.Text = "Квантование + границы";
-            this.btnProcessImage.UseVisualStyleBackColor = true;
-            this.btnProcessImage.Click += new System.EventHandler(this.btnProcessImage_Click);
+            this.trbPBCb.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.trbPBCb.Location = new System.Drawing.Point(281, 98);
+            this.trbPBCb.Maximum = 100;
+            this.trbPBCb.Minimum = 1;
+            this.trbPBCb.Name = "trbPBCb";
+            this.trbPBCb.Size = new System.Drawing.Size(127, 45);
+            this.trbPBCb.TabIndex = 10;
+            this.trbPBCb.TickFrequency = 10;
+            this.trbPBCb.Value = 11;
+            this.trbPBCb.ValueChanged += new System.EventHandler(this.trbPCBb_ValueChanged);
             // 
             // toolTip1
             // 
@@ -226,9 +188,9 @@
             this.panel2.AutoScroll = true;
             this.panel2.BackColor = System.Drawing.SystemColors.HighlightText;
             this.panel2.Controls.Add(this.pbQuantize);
-            this.panel2.Location = new System.Drawing.Point(271, 49);
+            this.panel2.Location = new System.Drawing.Point(229, 49);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(250, 300);
+            this.panel2.Size = new System.Drawing.Size(210, 210);
             this.panel2.TabIndex = 8;
             // 
             // pbQuantize
@@ -239,16 +201,15 @@
             this.pbQuantize.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pbQuantize.TabIndex = 6;
             this.pbQuantize.TabStop = false;
-            this.pbQuantize.Click += new System.EventHandler(this.pictureBoxQuantize_Click);
             // 
             // panel3
             // 
             this.panel3.AutoScroll = true;
             this.panel3.BackColor = System.Drawing.SystemColors.HighlightText;
             this.panel3.Controls.Add(this.pbResult);
-            this.panel3.Location = new System.Drawing.Point(527, 49);
+            this.panel3.Location = new System.Drawing.Point(444, 49);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(250, 300);
+            this.panel3.Size = new System.Drawing.Size(500, 500);
             this.panel3.TabIndex = 9;
             // 
             // pbResult
@@ -281,102 +242,58 @@
             this.trbBlur.TickFrequency = 10;
             this.trbBlur.ValueChanged += new System.EventHandler(this.trbBlur_ValueChanged);
             // 
-            // label3
+            // labelLineThickness
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(3, 90);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(91, 13);
-            this.label3.TabIndex = 23;
-            this.label3.Text = "Толщина границ";
+            this.labelLineThickness.AutoSize = true;
+            this.labelLineThickness.Location = new System.Drawing.Point(207, 156);
+            this.labelLineThickness.Name = "labelLineThickness";
+            this.labelLineThickness.Size = new System.Drawing.Size(104, 13);
+            this.labelLineThickness.TabIndex = 23;
+            this.labelLineThickness.Text = "Толщина линий: 10";
             // 
-            // textBoxEdgesWight
+            // trbLineThickness
             // 
-            this.textBoxEdgesWight.Location = new System.Drawing.Point(266, 106);
-            this.textBoxEdgesWight.Name = "textBoxEdgesWight";
-            this.textBoxEdgesWight.Size = new System.Drawing.Size(72, 20);
-            this.textBoxEdgesWight.TabIndex = 22;
-            this.textBoxEdgesWight.Text = "10";
-            // 
-            // trackBarEdgesWight
-            // 
-            this.trackBarEdgesWight.BackColor = System.Drawing.SystemColors.HighlightText;
-            this.trackBarEdgesWight.LargeChange = 2;
-            this.trackBarEdgesWight.Location = new System.Drawing.Point(6, 106);
-            this.trackBarEdgesWight.Maximum = 50;
-            this.trackBarEdgesWight.Minimum = 1;
-            this.trackBarEdgesWight.Name = "trackBarEdgesWight";
-            this.trackBarEdgesWight.Size = new System.Drawing.Size(254, 45);
-            this.trackBarEdgesWight.TabIndex = 21;
-            this.trackBarEdgesWight.TickFrequency = 10;
-            this.trackBarEdgesWight.TickStyle = System.Windows.Forms.TickStyle.Both;
-            this.trackBarEdgesWight.Value = 10;
-            this.trackBarEdgesWight.ValueChanged += new System.EventHandler(this.trackBarEdgesWight_ValueChanged);
-            // 
-            // textBoxInfo
-            // 
-            this.textBoxInfo.Location = new System.Drawing.Point(477, 426);
-            this.textBoxInfo.Name = "textBoxInfo";
-            this.textBoxInfo.Size = new System.Drawing.Size(180, 20);
-            this.textBoxInfo.TabIndex = 25;
+            this.trbLineThickness.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.trbLineThickness.LargeChange = 2;
+            this.trbLineThickness.Location = new System.Drawing.Point(210, 172);
+            this.trbLineThickness.Maximum = 50;
+            this.trbLineThickness.Minimum = 1;
+            this.trbLineThickness.Name = "trbLineThickness";
+            this.trbLineThickness.Size = new System.Drawing.Size(200, 45);
+            this.trbLineThickness.TabIndex = 21;
+            this.trbLineThickness.TickFrequency = 10;
+            this.trbLineThickness.Value = 10;
+            this.trbLineThickness.ValueChanged += new System.EventHandler(this.trbLineThickness_ValueChanged);
             // 
             // progressBar
             // 
-            this.progressBar.Location = new System.Drawing.Point(477, 449);
+            this.progressBar.Location = new System.Drawing.Point(444, 555);
             this.progressBar.Maximum = 6;
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(179, 23);
+            this.progressBar.Size = new System.Drawing.Size(500, 14);
             this.progressBar.TabIndex = 26;
             // 
-            // trackBarRegionSize
+            // trbMinSquare
             // 
-            this.trackBarRegionSize.BackColor = System.Drawing.SystemColors.HighlightText;
-            this.trackBarRegionSize.Location = new System.Drawing.Point(6, 23);
-            this.trackBarRegionSize.Maximum = 1000;
-            this.trackBarRegionSize.Minimum = 1;
-            this.trackBarRegionSize.Name = "trackBarRegionSize";
-            this.trackBarRegionSize.Size = new System.Drawing.Size(254, 45);
-            this.trackBarRegionSize.TabIndex = 28;
-            this.trackBarRegionSize.TickFrequency = 100;
-            this.trackBarRegionSize.TickStyle = System.Windows.Forms.TickStyle.Both;
-            this.trackBarRegionSize.Value = 5;
-            this.trackBarRegionSize.ValueChanged += new System.EventHandler(this.trackBarRegionSize_ValueChanged);
+            this.trbMinSquare.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.trbMinSquare.Location = new System.Drawing.Point(6, 172);
+            this.trbMinSquare.Maximum = 1000;
+            this.trbMinSquare.Minimum = 1;
+            this.trbMinSquare.Name = "trbMinSquare";
+            this.trbMinSquare.Size = new System.Drawing.Size(200, 45);
+            this.trbMinSquare.TabIndex = 28;
+            this.trbMinSquare.TickFrequency = 100;
+            this.trbMinSquare.Value = 5;
+            this.trbMinSquare.ValueChanged += new System.EventHandler(this.trbMinSquare_ValueChanged);
             // 
-            // buttonRegions
+            // labelMinSquare
             // 
-            this.buttonRegions.Location = new System.Drawing.Point(266, 47);
-            this.buttonRegions.Name = "buttonRegions";
-            this.buttonRegions.Size = new System.Drawing.Size(72, 53);
-            this.buttonRegions.TabIndex = 29;
-            this.buttonRegions.Text = "Удалить маленькие области";
-            this.buttonRegions.UseVisualStyleBackColor = true;
-            this.buttonRegions.Click += new System.EventHandler(this.buttonRegions_Click);
-            // 
-            // buttonEdges
-            // 
-            this.buttonEdges.Location = new System.Drawing.Point(266, 132);
-            this.buttonEdges.Name = "buttonEdges";
-            this.buttonEdges.Size = new System.Drawing.Size(72, 32);
-            this.buttonEdges.TabIndex = 31;
-            this.buttonEdges.Text = "Границы";
-            this.buttonEdges.UseVisualStyleBackColor = true;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(3, 7);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(165, 13);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "Минимальный размер области";
-            // 
-            // textBoxRegionSize
-            // 
-            this.textBoxRegionSize.Location = new System.Drawing.Point(266, 23);
-            this.textBoxRegionSize.Name = "textBoxRegionSize";
-            this.textBoxRegionSize.Size = new System.Drawing.Size(72, 20);
-            this.textBoxRegionSize.TabIndex = 29;
-            this.textBoxRegionSize.Text = "5";
+            this.labelMinSquare.AutoSize = true;
+            this.labelMinSquare.Location = new System.Drawing.Point(6, 156);
+            this.labelMinSquare.Name = "labelMinSquare";
+            this.labelMinSquare.Size = new System.Drawing.Size(180, 13);
+            this.labelMinSquare.TabIndex = 6;
+            this.labelMinSquare.Text = "Минимальный размер области: 5 ";
             // 
             // dataGridView1
             // 
@@ -397,7 +314,7 @@
             this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(181, 196);
+            this.dataGridView1.Size = new System.Drawing.Size(181, 305);
             this.dataGridView1.TabIndex = 32;
             this.dataGridView1.TabStop = false;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
@@ -433,57 +350,70 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(12, 33);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(151, 13);
+            this.label5.Size = new System.Drawing.Size(154, 13);
             this.label5.TabIndex = 35;
-            this.label5.Text = "Оригинальное изображение";
+            this.label5.Text = "Оригинальное изображение:";
             // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Location = new System.Drawing.Point(15, 355);
+            this.tabControl1.Location = new System.Drawing.Point(12, 265);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(423, 258);
+            this.tabControl1.Size = new System.Drawing.Size(427, 304);
             this.tabControl1.TabIndex = 36;
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.textBoxPBCb);
+            this.tabPage1.Controls.Add(this.labelPBCb);
+            this.tabPage1.Controls.Add(this.labelPBCg);
+            this.tabPage1.Controls.Add(this.labelMinSquare);
+            this.tabPage1.Controls.Add(this.labelPBCr);
             this.tabPage1.Controls.Add(this.labelPaletteSize);
-            this.tabPage1.Controls.Add(this.trackBarPBCr);
+            this.tabPage1.Controls.Add(this.trbLineThickness);
+            this.tabPage1.Controls.Add(this.trbPBCr);
+            this.tabPage1.Controls.Add(this.trbMinSquare);
             this.tabPage1.Controls.Add(this.trbPaletteSize);
-            this.tabPage1.Controls.Add(this.trackBarPBCg);
-            this.tabPage1.Controls.Add(this.textBoxPBCg);
+            this.tabPage1.Controls.Add(this.trbPBCg);
             this.tabPage1.Controls.Add(this.labelBlur);
-            this.tabPage1.Controls.Add(this.trackBarPBCb);
+            this.tabPage1.Controls.Add(this.labelLineThickness);
+            this.tabPage1.Controls.Add(this.trbPBCb);
             this.tabPage1.Controls.Add(this.trbBlur);
-            this.tabPage1.Controls.Add(this.textBoxPBCr);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(415, 232);
+            this.tabPage1.Size = new System.Drawing.Size(419, 278);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Настройка палитры";
+            this.tabPage1.Text = "Параметры обработки";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
+            // labelPBCb
             // 
-            this.tabPage2.Controls.Add(this.buttonEdges);
-            this.tabPage2.Controls.Add(this.label4);
-            this.tabPage2.Controls.Add(this.buttonRegions);
-            this.tabPage2.Controls.Add(this.trackBarRegionSize);
-            this.tabPage2.Controls.Add(this.trackBarEdgesWight);
-            this.tabPage2.Controls.Add(this.textBoxRegionSize);
-            this.tabPage2.Controls.Add(this.textBoxEdgesWight);
-            this.tabPage2.Controls.Add(this.label3);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Size = new System.Drawing.Size(415, 232);
-            this.tabPage2.TabIndex = 2;
-            this.tabPage2.Text = "Границы и области";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.labelPBCb.AutoSize = true;
+            this.labelPBCb.Location = new System.Drawing.Point(278, 82);
+            this.labelPBCb.Name = "labelPBCb";
+            this.labelPBCb.Size = new System.Drawing.Size(118, 13);
+            this.labelPBCb.TabIndex = 23;
+            this.labelPBCb.Text = "Коррекция синего: 11";
+            // 
+            // labelPBCg
+            // 
+            this.labelPBCg.AutoSize = true;
+            this.labelPBCg.Location = new System.Drawing.Point(142, 82);
+            this.labelPBCg.Name = "labelPBCg";
+            this.labelPBCg.Size = new System.Drawing.Size(130, 13);
+            this.labelPBCg.TabIndex = 22;
+            this.labelPBCg.Text = "Коррекция зелёного: 59";
+            // 
+            // labelPBCr
+            // 
+            this.labelPBCr.AutoSize = true;
+            this.labelPBCr.Location = new System.Drawing.Point(6, 82);
+            this.labelPBCr.Name = "labelPBCr";
+            this.labelPBCr.Size = new System.Drawing.Size(130, 13);
+            this.labelPBCr.TabIndex = 21;
+            this.labelPBCr.Text = "Коррекция красного: 30";
             // 
             // tabPage3
             // 
@@ -493,7 +423,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(415, 232);
+            this.tabPage3.Size = new System.Drawing.Size(419, 278);
             this.tabPage3.TabIndex = 1;
             this.tabPage3.Text = "Ручная палитра";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -502,10 +432,11 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileTSMI,
+            this.конвертироватьToolStripMenuItem,
             this.aboutTSMI});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(788, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(954, 24);
             this.menuStrip1.TabIndex = 37;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -553,6 +484,35 @@
             this.paletteImageTSMI.Size = new System.Drawing.Size(253, 22);
             this.paletteImageTSMI.Text = "Упрощённую палитру";
             // 
+            // конвертироватьToolStripMenuItem
+            // 
+            this.конвертироватьToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.конвертироватьToolStripMenuItem1,
+            this.обновитьЛинииToolStripMenuItem,
+            this.обновитьОбластиToolStripMenuItem});
+            this.конвертироватьToolStripMenuItem.Name = "конвертироватьToolStripMenuItem";
+            this.конвертироватьToolStripMenuItem.Size = new System.Drawing.Size(95, 20);
+            this.конвертироватьToolStripMenuItem.Text = "Изображение";
+            // 
+            // конвертироватьToolStripMenuItem1
+            // 
+            this.конвертироватьToolStripMenuItem1.Name = "конвертироватьToolStripMenuItem1";
+            this.конвертироватьToolStripMenuItem1.Size = new System.Drawing.Size(176, 22);
+            this.конвертироватьToolStripMenuItem1.Text = "Конвертировать";
+            this.конвертироватьToolStripMenuItem1.Click += new System.EventHandler(this.btnProcessImage_Click);
+            // 
+            // обновитьЛинииToolStripMenuItem
+            // 
+            this.обновитьЛинииToolStripMenuItem.Name = "обновитьЛинииToolStripMenuItem";
+            this.обновитьЛинииToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.обновитьЛинииToolStripMenuItem.Text = "Обновить линии";
+            // 
+            // обновитьОбластиToolStripMenuItem
+            // 
+            this.обновитьОбластиToolStripMenuItem.Name = "обновитьОбластиToolStripMenuItem";
+            this.обновитьОбластиToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.обновитьОбластиToolStripMenuItem.Text = "Обновить области";
+            // 
             // aboutTSMI
             // 
             this.aboutTSMI.Name = "aboutTSMI";
@@ -562,20 +522,20 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(275, 33);
+            this.label6.Location = new System.Drawing.Point(226, 33);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(112, 13);
+            this.label6.Size = new System.Drawing.Size(146, 13);
             this.label6.TabIndex = 38;
-            this.label6.Text = "Упрощение палитры";
+            this.label6.Text = "Упрощенное изображение:";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(524, 33);
+            this.label7.Location = new System.Drawing.Point(447, 33);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(59, 13);
+            this.label7.Size = new System.Drawing.Size(62, 13);
             this.label7.TabIndex = 39;
-            this.label7.Text = "Результат";
+            this.label7.Text = "Результат:";
             // 
             // openFileDialog
             // 
@@ -586,13 +546,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.ClientSize = new System.Drawing.Size(788, 625);
+            this.ClientSize = new System.Drawing.Size(954, 582);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.progressBar);
-            this.Controls.Add(this.textBoxInfo);
             this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.btnProcessImage);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
@@ -607,9 +565,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.pbOriginal)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarPBCr)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarPBCg)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarPBCb)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trbPBCr)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trbPBCg)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trbPBCb)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbQuantize)).EndInit();
@@ -617,15 +575,13 @@
             this.panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbResult)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trbBlur)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarEdgesWight)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarRegionSize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trbLineThickness)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trbMinSquare)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMouseColor)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
@@ -640,13 +596,9 @@
         private System.Windows.Forms.Label labelPaletteSize;
         private System.Windows.Forms.PictureBox pbOriginal;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.TrackBar trackBarPBCr;
-        private System.Windows.Forms.TrackBar trackBarPBCg;
-        private System.Windows.Forms.TrackBar trackBarPBCb;
-        private System.Windows.Forms.TextBox textBoxPBCr;
-        private System.Windows.Forms.TextBox textBoxPBCg;
-        private System.Windows.Forms.TextBox textBoxPBCb;
-        private System.Windows.Forms.Button btnProcessImage;
+        private System.Windows.Forms.TrackBar trbPBCr;
+        private System.Windows.Forms.TrackBar trbPBCg;
+        private System.Windows.Forms.TrackBar trbPBCb;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.PictureBox pbQuantize;
@@ -654,16 +606,11 @@
         private System.Windows.Forms.PictureBox pbResult;
         private System.Windows.Forms.Label labelBlur;
         private System.Windows.Forms.TrackBar trbBlur;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBoxEdgesWight;
-        private System.Windows.Forms.TrackBar trackBarEdgesWight;
-        private System.Windows.Forms.TextBox textBoxInfo;
+        private System.Windows.Forms.Label labelLineThickness;
+        private System.Windows.Forms.TrackBar trbLineThickness;
         private System.Windows.Forms.ProgressBar progressBar;
-        private System.Windows.Forms.TrackBar trackBarRegionSize;
-        private System.Windows.Forms.Button buttonRegions;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBoxRegionSize;
-        private System.Windows.Forms.Button buttonEdges;
+        private System.Windows.Forms.TrackBar trbMinSquare;
+        private System.Windows.Forms.Label labelMinSquare;
         private System.Windows.Forms.PictureBox pictureBoxMouseColor;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.CheckBox checkBoxUseDatPalette;
@@ -671,7 +618,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileTSMI;
@@ -685,6 +631,13 @@
         private System.Windows.Forms.ToolStripMenuItem resultImageTSMI;
         private System.Windows.Forms.ToolStripMenuItem paletteImageTSMI;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.Label labelPBCb;
+        private System.Windows.Forms.Label labelPBCg;
+        private System.Windows.Forms.Label labelPBCr;
+        private System.Windows.Forms.ToolStripMenuItem конвертироватьToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem конвертироватьToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem обновитьЛинииToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem обновитьОбластиToolStripMenuItem;
     }
 }
 

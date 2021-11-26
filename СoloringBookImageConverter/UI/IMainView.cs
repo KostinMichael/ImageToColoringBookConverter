@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Drawing;
 
 namespace СoloringBookImageConverter.UI {
@@ -11,5 +11,10 @@ namespace СoloringBookImageConverter.UI {
         event EventHandler<ImagePathEventArgs> ImagePathChanged;
         event EventHandler<TrackBarEventArgs> BlurDegreeChanged;
         event EventHandler<TrackBarEventArgs> PaletteSizeChanged;
+        event EventHandler<TrackBarEventArgs> MinSquareChanged;
+        event EventHandler<TrackBarEventArgs> LineThicknessChanged;
+        event EventHandler<TrackBarEventArgs> RedPCBDegree;
+        event EventHandler<TrackBarEventArgs> GreenPCBDegree;
+        event EventHandler<TrackBarEventArgs> BluePCBDegree;
     }
 }

@@ -117,13 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="picture_format_filter" xml:space="preserve">
-    <value>Picture files (*.png;*.jpg;*.bmp)|*.png;*.jpg;*.bmp</value>
-  </data>
-  <data name="trb_blur" xml:space="preserve">
+  <data name="label_blur" xml:space="preserve">
     <value>Предварительное размытие: </value>
   </data>
-  <data name="trb_palette_size" xml:space="preserve">
-    <value>Кол-во цветов в палитре</value>
+  <data name="label_line_thickness" xml:space="preserve">
+    <value>Толщина линий: </value>
+  </data>
+  <data name="label_min_square" xml:space="preserve">
+    <value>Минимальный размер области: </value>
+  </data>
+  <data name="label_palette_size" xml:space="preserve">
+    <value>Кол-во цветов в палитре: </value>
+  </data>
+  <data name="label_pbcb" xml:space="preserve">
+    <value>Коррекция синего: </value>
+  </data>
+  <data name="label_pbcg" xml:space="preserve">
+    <value>Коррекция зелёного: </value>
+  </data>
+  <data name="label_pbcr" xml:space="preserve">
+    <value>Коррекция красного:</value>
+  </data>
+  <data name="picture_format_filter" xml:space="preserve">
+    <value>Picture files (*.png;*.jpg;*.bmp)|*.png;*.jpg;*.bmp</value>
   </data>
 </root>

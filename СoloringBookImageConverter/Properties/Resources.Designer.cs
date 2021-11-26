@@ -61,29 +61,74 @@ namespace СoloringBookImageConverter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Предварительное размытие: .
+        /// </summary>
+        internal static string label_blur {
+            get {
+                return ResourceManager.GetString("label_blur", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Толщина линий: .
+        /// </summary>
+        internal static string label_line_thickness {
+            get {
+                return ResourceManager.GetString("label_line_thickness", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Минимальный размер области: .
+        /// </summary>
+        internal static string label_min_square {
+            get {
+                return ResourceManager.GetString("label_min_square", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Кол-во цветов в палитре: .
+        /// </summary>
+        internal static string label_palette_size {
+            get {
+                return ResourceManager.GetString("label_palette_size", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Коррекция синего: .
+        /// </summary>
+        internal static string label_pbcb {
+            get {
+                return ResourceManager.GetString("label_pbcb", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Коррекция зелёного: .
+        /// </summary>
+        internal static string label_pbcg {
+            get {
+                return ResourceManager.GetString("label_pbcg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Коррекция красного:.
+        /// </summary>
+        internal static string label_pbcr {
+            get {
+                return ResourceManager.GetString("label_pbcr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Picture files (*.png;*.jpg;*.bmp)|*.png;*.jpg;*.bmp.
         /// </summary>
         internal static string picture_format_filter {
             get {
                 return ResourceManager.GetString("picture_format_filter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Предварительное размытие: .
-        /// </summary>
-        internal static string trb_blur {
-            get {
-                return ResourceManager.GetString("trb_blur", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Кол-во цветов в палитре.
-        /// </summary>
-        internal static string trb_palette_size {
-            get {
-                return ResourceManager.GetString("trb_palette_size", resourceCulture);
             }
         }
     }
