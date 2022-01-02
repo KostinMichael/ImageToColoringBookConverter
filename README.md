@@ -10,9 +10,9 @@ Reworked core achitecture to MVP and created basic functions: quantizing and edg
 ## Project setup
 
 ## Future scope
--Extras quantization algorythms
--Line thickness
--Region numerating on image
--More filters(blur, medianm, etc)
--Palette of your own choosen colors
--Migrate to WPF
+- Extras quantization algorythms
+- Line thickness
+- Region numerating on image
+- More filters(blur, medianm, etc)
+- Palette of your own choosen colors
+- Migrate to WPF
