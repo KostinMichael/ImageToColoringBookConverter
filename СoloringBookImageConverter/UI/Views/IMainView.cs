@@ -1,20 +1,22 @@
-﻿ using System;
+﻿using System;
 using System.Drawing;
+using CBIC.Common;
+using СoloringBookImageConverter.Common;
 
-namespace СoloringBookImageConverter.UI {
-    interface IMainView : IView{
+namespace СoloringBookImageConverter.UI.Views {
+    interface IMainView : IView, INotifier{
         void SetOriginalImage(Bitmap bitmap);
         void SetSimplifiedImage(Bitmap bitmap);
         void SetResultImage(Bitmap bitmap);
-        void ShowErrorMessage(string errorMessage);
+        void SetPaletteMaxSize(int maxValue);
+        void SetPaletteSizeInfo(int value);
+        void BlockElements();
+        void UnBlockElements();
         event EventHandler ProcessImage;
         event EventHandler<ImagePathEventArgs> ImagePathChanged;
-        event EventHandler<TrackBarEventArgs> BlurDegreeChanged;
         event EventHandler<TrackBarEventArgs> PaletteSizeChanged;
+        event EventHandler<TrackBarEventArgs> BlurDegreeChanged;
         event EventHandler<TrackBarEventArgs> MinSquareChanged;
         event EventHandler<TrackBarEventArgs> LineThicknessChanged;
-        event EventHandler<TrackBarEventArgs> RedPCBDegree;
-        event EventHandler<TrackBarEventArgs> GreenPCBDegree;
-        event EventHandler<TrackBarEventArgs> BluePCBDegree;
     }
 }

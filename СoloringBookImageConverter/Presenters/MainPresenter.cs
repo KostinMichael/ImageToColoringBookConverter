@@ -1,109 +1,81 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Drawing;
-using System.IO;
-using СoloringBookImageConverter.Controllers;
-using СoloringBookImageConverter.Exceptions;
-using СoloringBookImageConverter.UI;
+using CBIC.Common;
+using CBIC.Core;
+using CBIC.Filters;
+using CBIC.Quantizers;
+using СoloringBookImageConverter.Common;
+using СoloringBookImageConverter.UI.Views;
 
 namespace СoloringBookImageConverter.Presenters {
-    class MainPresenter : IPresenter {
-        private readonly IMainView mainForm;
-        private readonly Painter painter;
-        private string imagePath = "";
-        private int blurDegree = 0, paletteSize = 0, PCBr = 30, PCBg = 59, PCBb = 11, minSquare = 0, lineThickness = 0;
+    class MainPresenter : IPresenter, INotifier {
+        private readonly IMainView _mainForm;
+        private readonly IProcessor _imageProcessor;
+        private readonly BackgroundWorker _bwImageProcess = new BackgroundWorker();
         public MainPresenter(IMainView view) {
-            mainForm = view;
-            mainForm.ImagePathChanged += ImagePathChanged;
-            mainForm.ProcessImage += ProcessImage;
-            mainForm.BlurDegreeChanged += BlurDegreeChanged;
-            mainForm.PaletteSizeChanged += PaletteSizeChanged;
-            mainForm.RedPCBDegree += RedPCBDegree;
-            mainForm.GreenPCBDegree += GreenPCBDegree;
-            mainForm.BluePCBDegree += BluePCBDegree;
+            _mainForm = view;
+            _mainForm.ImagePathChanged += ImagePathChanged;
+            _mainForm.ProcessImage += ProcessImage;
+            _mainForm.PaletteSizeChanged += PaletteSizeChanged;
+            /*mainForm.BlurDegreeChanged += BlurDegreeChanged;
             mainForm.LineThicknessChanged += LineThicknessChanged;
-            mainForm.MinSquareChanged += MinSquareChanged;
-            painter = new Painter(200, 25, 16);
+            mainForm.MinSquareChanged += MinSquareChanged;*/
+            _bwImageProcess.DoWork += DoWorkProcessImage;
+            _bwImageProcess.RunWorkerCompleted += ViewImageUpdate;
+            _imageProcessor = new ImageProcessor(this, new WeightedAverageQuantizer(),new SimpleEdger(), new PaletteExtractor());
+            _mainForm.SetPaletteMaxSize(_imageProcessor.PaletteSize.ConventMaxPaletteSize);
         }
-
+        public void PaletteSizeChanged(Object sender, TrackBarEventArgs e)
+        {
+            _imageProcessor.PaletteSize.ConventPaletteSize = e.Value;
+            _mainForm.SetPaletteSizeInfo(_imageProcessor.PaletteSize.PaletteSize);
+        }
+        public void ProcessImage(object sender, EventArgs e) {
+            _bwImageProcess.RunWorkerAsync();
+        }
+        private void DoWorkProcessImage(object sender, DoWorkEventArgs e) {
+            _mainForm.BlockElements();
+            _imageProcessor.ProcessImage();
+            _mainForm.UnBlockElements();
+        }
+        public void ImagePathChanged(Object sender, ImagePathEventArgs e) {
+            _imageProcessor.UpdateImage(e.FilePath);
+            _bwImageProcess.RunWorkerAsync();
+        }
+        public void ShowMessage(string text) {
+            _mainForm.ShowMessage(text);
+        }
+        public void SetupProgress(int maxValue, int step) {
+            _mainForm.SetupProgress(maxValue, step);
+        }
+        public void ProgressStep() {
+            _mainForm.ProgressStep();
+        }
         public void Run() {
-            mainForm.Showy();
+            _mainForm.Showy();
         }
-        public void MinSquareChanged(Object sender, TrackBarEventArgs e) {
+        private void ViewImageUpdate(object obj, RunWorkerCompletedEventArgs args) {
+            _mainForm.SetOriginalImage(_imageProcessor.OriginalImg);
+            _mainForm.SetSimplifiedImage(_imageProcessor.SimpleImg);
+            _mainForm.SetResultImage(_imageProcessor.ResultImg);
+        }
+        /*public void MinSquareChanged(Object sender, TrackBarEventArgs e) {
             if (e.Value < 1) {
-                throw new InvalidArgumentException("'MinSquareChanged' value cannot be zero");
+                throw new ArgumentException("'MinSquareChanged' value cannot be zero");
             }
             minSquare = e.Value;
         }
         public void LineThicknessChanged(Object sender, TrackBarEventArgs e) {
             if (e.Value < 1) {
-                throw new InvalidArgumentException("'LineThickness' value cannot be zero");
+                throw new ArgumentException("'LineThickness' value cannot be zero");
             }
             lineThickness = e.Value;
         }
-        public void RedPCBDegree(Object sender, TrackBarEventArgs e) {
-            if (e.Value < 1) {
-                throw new InvalidArgumentException("'RedPCBDegree' value cannot be zero");
-            }
-            PCBr = e.Value;
-        }
-        public void GreenPCBDegree(Object sender, TrackBarEventArgs e) {
-            if (e.Value < 1) {
-                throw new InvalidArgumentException("'GreenPCBDegree' value cannot be zero");
-            }
-            PCBg = e.Value;
-        }
-        public void BluePCBDegree(Object sender, TrackBarEventArgs e) {
-            if (e.Value < 1) {
-                throw new InvalidArgumentException("'BluePCBDegree' value cannot be zero");
-            }
-            PCBb = e.Value;
-        }
-
-        public void PaletteSizeChanged(Object sender, TrackBarEventArgs e) {
-            if (e.Value < 1) {
-                throw new InvalidArgumentException("'paletteSize' value cannot be zero");
-            }
-            paletteSize = e.Value;
-        }
-
         public void BlurDegreeChanged(Object sender, TrackBarEventArgs e) {
             if (e.Value < 0) {
-                throw new InvalidArgumentException("'blur' value cannot be negative");
+                throw new ArgumentException("'blur' value cannot be negative");
             }
             blurDegree = e.Value;
-        }
-
-        public void ImagePathChanged(Object sender, ImagePathEventArgs e) {
-            if (File.Exists(e.FilePath)) {
-                imagePath = e.FilePath;
-                mainForm.SetOriginalImage(new Bitmap(imagePath));
-            } else {
-                mainForm.ShowErrorMessage("select image first!");
-            }
-        }
-
-        public void ProcessImage(Object sender, EventArgs e) {
-            if (File.Exists(imagePath)) {
-                BackgroundWorker backgroundWorker = new BackgroundWorker();
-                backgroundWorker.DoWork += DoWork;
-                backgroundWorker.RunWorkerAsync();
-                backgroundWorker.RunWorkerCompleted += delegate {
-                    mainForm.SetResultImage(painter.getEdgesBitmap());
-                    mainForm.SetSimplifiedImage(painter.getQuantizeBitmap());
-                    //todo: pictureBoxEdges.Image = painter.GetMedianImage(10);
-                };
-                //Thread threadGravity = new Thread(() => painter.makeEdgesImage(new Bitmap("med.png"), 0));
-                //threadGravity.Start();
-            } else {
-                mainForm.ShowErrorMessage("select image first!");
-            }
-        }
-
-        private void DoWork(object sender, DoWorkEventArgs e) {
-            var worker = sender as BackgroundWorker;
-            e.Result = e.Argument;
-            painter.makeEdgesImage(new Bitmap(imagePath), 0);
-        }
+        }*/
     }
 }

@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace СoloringBookImageConverter.UI {
+namespace СoloringBookImageConverter.Common {
     public class ImagePathEventArgs : EventArgs{
         public string FilePath { get; }
 

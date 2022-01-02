@@ -138,6 +138,9 @@
   <data name="label_pbcr" xml:space="preserve">
     <value>Коррекция красного:</value>
   </data>
+  <data name="palette_Size" xml:space="preserve">
+    <value>16</value>
+  </data>
   <data name="picture_format_filter" xml:space="preserve">
     <value>Picture files (*.png;*.jpg;*.bmp)|*.png;*.jpg;*.bmp</value>
   </data>

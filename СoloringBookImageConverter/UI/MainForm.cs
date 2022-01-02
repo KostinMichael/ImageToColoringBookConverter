@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using СoloringBookImageConverter.Common;
 using СoloringBookImageConverter.Properties;
+using СoloringBookImageConverter.UI.Views;
 
 namespace СoloringBookImageConverter.UI {
     //для листа А4 рекомендуется ариал-8   гдето- 25х25 пикселей
@@ -12,18 +14,15 @@ namespace СoloringBookImageConverter.UI {
         public event EventHandler<TrackBarEventArgs> PaletteSizeChanged;
         public event EventHandler<TrackBarEventArgs> MinSquareChanged;
         public event EventHandler<TrackBarEventArgs> LineThicknessChanged;
-        public event EventHandler<TrackBarEventArgs> RedPCBDegree;
-        public event EventHandler<TrackBarEventArgs> GreenPCBDegree;
-        public event EventHandler<TrackBarEventArgs> BluePCBDegree;
-
+        private int _activeTab = -1;
         public MainForm() {
             InitializeComponent();
         }
 
-        //-------------------legacy------------------
+        #region Legacy
         private void pictureBoxOriginal_Click(object sender, EventArgs e) {
             MouseEventArgs me = (MouseEventArgs)e;
-            Point coordinates = me.Location; 
+            Point coordinates = me.Location;
             //textBoxInfo.Text = coordinates.X.ToString() + "---" + coordinates.Y.ToString();
             dataGridView1.Rows.Add();
             dataGridView1.ClearSelection();
@@ -35,11 +34,11 @@ namespace СoloringBookImageConverter.UI {
 
         //кликнул по клетке для удаления
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e) {
-            dataGridView1.Rows.Remove(dataGridView1.CurrentRow);
+            dataGridView1.Rows.Remove(dataGridView1.CurrentRow ?? throw new InvalidOperationException());
             dataGridView1.Columns[0].HeaderText = "Палитра " + (dataGridView1.RowCount).ToString();
             dataGridView1.ClearSelection();
         }
-        //-------------------legacy------------------
+        #endregion
 
         /// <summary>
         /// отображает цвет пикселя под курсором в pictureBoxMouseColor 
@@ -50,7 +49,7 @@ namespace СoloringBookImageConverter.UI {
         private void pictureBoxOriginal_MouseMove(object sender, MouseEventArgs e) {
             if (pbOriginal.Image != null) {
                 Point coordinates = e.Location;
-                pictureBoxMouseColor.BackColor = ((Bitmap)pbOriginal.Image).GetPixel(coordinates.X, coordinates.Y);
+                //pictureBoxMouseColor.BackColor = ((Bitmap)pbOriginal.Image).GetPixel(coordinates.X, coordinates.Y);
             }
         }
 
@@ -58,8 +57,8 @@ namespace СoloringBookImageConverter.UI {
             Application.Run(this);
         }
 
-        public void ShowErrorMessage(string errorMessage) {
-            MessageBox.Show(errorMessage);
+        public void ShowMessage(string text) {
+            MessageBox.Show(text);
         }
 
         public void SetOriginalImage(Bitmap bitmap) {
@@ -73,8 +72,30 @@ namespace СoloringBookImageConverter.UI {
         public void SetResultImage(Bitmap bitmap) {
             pbResult.Image = bitmap;
         }
-        private void btnProcessImage_Click(object sender, EventArgs e) {
-            ProcessImage?.Invoke(this, new EventArgs());
+
+        public void SetPaletteMaxSize(int maxValue) {
+            trbPaletteSize.Maximum = maxValue;
+            trbPaletteSize.Value = 1;
+        }
+
+        public void SetPaletteSizeInfo(int value) {
+            labelPaletteSize.Text = Resources.label_palette_size + value;
+        }
+
+        public void BlockElements() {
+            Invoke(new Action(() => {
+                trbBlur.Enabled = false;
+                trbLineThickness.Enabled = false;
+                trbMinSquare.Enabled = false;
+                trbPaletteSize.Enabled = false;
+            }));
+
+        }
+        public void UnBlockElements() {
+            trbBlur.Invoke(new Action(() => trbBlur.Enabled = true));
+            trbLineThickness.Invoke(new Action(() => trbLineThickness.Enabled = true));
+            trbMinSquare.Invoke(new Action(() => trbMinSquare.Enabled = true));
+            trbPaletteSize.Invoke(new Action(() => trbPaletteSize.Enabled = true));
         }
 
         private void openImageTSMI_Click(object sender, EventArgs e) {
@@ -84,27 +105,23 @@ namespace СoloringBookImageConverter.UI {
                 ImagePathChanged?.Invoke(this, new ImagePathEventArgs(openFileDialog.FileName));
             }
         }
-
         private void trbBlur_ValueChanged(object sender, EventArgs e) {
-            BlurDegreeChanged?.Invoke(this, new TrackBarEventArgs(trbBlur.Value));
+            BlurDegreeChanged?.Invoke(this, new TrackBarEventArgs((byte)trbBlur.Value));
             labelBlur.Text = Resources.label_blur + trbBlur.Value;
         }
+
+        private void trbPaletteSize_MouseUp(object sender, MouseEventArgs e) {
+            ProcessImage?.Invoke(this, new TrackBarEventArgs(trbPaletteSize.Value));
+        }
         private void trbPaletteSize_ValueChanged(object sender, EventArgs e) {
-            labelPaletteSize.Text = Resources.label_palette_size + trbPaletteSize.Value;
             PaletteSizeChanged?.Invoke(this, new TrackBarEventArgs(trbPaletteSize.Value));
         }
-        private void trbPCBr_ValueChanged(object sender, EventArgs e) {
-            labelPBCr.Text = Resources.label_pbcr + trbPBCr.Value;
-            RedPCBDegree?.Invoke(this, new TrackBarEventArgs(trbPBCr.Value));
+        private void trbPaletteSize_KeyUp(object sender, KeyEventArgs e) {
+            if (e.KeyCode == Keys.Enter) {
+                ProcessImage?.Invoke(this, new TrackBarEventArgs(trbPaletteSize.Value));
+            }
         }
-        private void trbPCBg_ValueChanged(object sender, EventArgs e) {
-            labelPBCg.Text = Resources.label_pbcg + trbPBCg.Value;
-            GreenPCBDegree?.Invoke(this, new TrackBarEventArgs(trbPBCg.Value));
-        }
-        private void trbPCBb_ValueChanged(object sender, EventArgs e) {
-            labelPBCb.Text = Resources.label_pbcb + trbPBCb.Value;
-            BluePCBDegree?.Invoke(this, new TrackBarEventArgs(trbPBCb.Value));
-        }
+
         private void trbMinSquare_ValueChanged(object sender, EventArgs e) {
             labelMinSquare.Text = Resources.label_min_square + trbMinSquare.Value;
             MinSquareChanged?.Invoke(this, new TrackBarEventArgs(trbMinSquare.Value));
@@ -112,6 +129,26 @@ namespace СoloringBookImageConverter.UI {
         private void trbLineThickness_ValueChanged(object sender, EventArgs e) {
             labelLineThickness.Text = Resources.label_line_thickness + trbLineThickness.Value;
             LineThicknessChanged?.Invoke(this, new TrackBarEventArgs(trbLineThickness.Value));
+        }
+        public void SetupProgress(int maxValue, int step) {
+            progressBar.Invoke(new Action(() => progressBar.Value = 0));
+            progressBar.Invoke(new Action(() => progressBar.Maximum = maxValue));
+            progressBar.Invoke(new Action(() => progressBar.Step = step));
+        }
+        public void ProgressStep() {
+            progressBar.Invoke(new Action(() => progressBar.Increment(progressBar.Step)));
+        }
+
+        private void tabControl2_MouseMove(object sender, MouseEventArgs e) {
+            if (e.X <= 62 && _activeTab != 0) {
+                tabControl2.SelectedIndex = _activeTab = 0;
+            }
+            if (e.X > 62 && e.X <= 130 && _activeTab != 1) {
+                tabControl2.SelectedIndex = _activeTab = 1;
+            }
+            if (e.X > 139 && _activeTab != 2) {
+                tabControl2.SelectedIndex = _activeTab = 2;
+            }
         }
     }
 }
