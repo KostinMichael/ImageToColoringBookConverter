@@ -2,7 +2,7 @@
 
 ## Description
 Creating Coloring Book from an image.
-## About the project.
+## About the project
 Reworked core achitecture to MVP and created basic functions: quantizing and edging.
 ### Example: 4 colors palette
 <img src="https://user-images.githubusercontent.com/32095048/147881547-e018b03c-a82a-451f-8f8e-fe2892cce09e.png">
