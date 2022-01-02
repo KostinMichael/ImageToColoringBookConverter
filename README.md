@@ -17,4 +17,4 @@ Reworked core achitecture to MVP and created basic functions: quantizing and edg
 - Palette of your own choosen colors
 - Migrate to WPF
 
-## [Contributions are Welcome](https://github.com/silent-lad/VueSolitaire/blob/master/CONTRIBUTING.md)
+## [Contributions are Welcome](https://github.com/KostinMichael/ImageToColoringBookConverter/blob/master/CONTRIBUTING.md)
