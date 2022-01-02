@@ -16,3 +16,5 @@ Reworked core achitecture to MVP and created basic functions: quantizing and edg
 - More filters(blur, medianm, etc)
 - Palette of your own choosen colors
 - Migrate to WPF
+
+## [Contributions are Welcome](https://github.com/silent-lad/VueSolitaire/blob/master/CONTRIBUTING.md)
