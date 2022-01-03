@@ -6,6 +6,8 @@
 
 ## Description
 Creating Coloring Book from an image.
+### Requirements
+- .NET 4.6.1
 ## About the project
 Reworked core achitecture to MVP and created basic functions: quantizing and edging.
 ### Example: 4 colors palette
