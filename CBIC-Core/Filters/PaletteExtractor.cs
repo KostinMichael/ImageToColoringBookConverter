@@ -74,7 +74,10 @@ namespace CBIC.Filters
         {
             public int Compare(byte[] x, byte[] y)
             {
-                if (x == null || y == null) throw new ArgumentNullException("Attempt to compare null byte array.");
+                if (x == null || y == null)
+                {
+                    throw new ArgumentNullException("Attempt to compare null byte array.");
+                }
                 return ((x[0] + x[1] + x[2]) - (y[0] + y[1] + y[2])) / 3;
             }
         }

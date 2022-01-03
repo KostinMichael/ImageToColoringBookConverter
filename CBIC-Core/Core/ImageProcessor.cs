@@ -37,11 +37,10 @@ namespace CBIC.Core
         {
             if (_originalImg != null)
             {
-                //todo create trackbar for selecting major color
                 _simpleImg = _quantizer.GetSimplifiedImg(_originalImg, MajorColor.R, _conventPaletteSize, _notifier); 
                 _resultImg = _simpleEdger.FilteredImg(SimpleImg, _notifier);
                 //todo create picturebox for palette image
-                //_resultImg = _paletteExtractor.FilteredImg(_simpleImg, _notifier); 
+                //todo create trackbar for selecting major color
             }
         }
         public void UpdateImage(string imagePath)
