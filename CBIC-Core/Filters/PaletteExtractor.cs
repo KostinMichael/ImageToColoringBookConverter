@@ -22,7 +22,7 @@ namespace CBIC.Filters
                 int step = width / paletteSize; //ширина одной клеточки палитры
                 for (int h = 0; h < height; h++)
                 {
-                    byte* curpos = ((byte*)bd.Scan0) + h * bd.Stride;
+                    byte* curpos = ((byte*)bd.Scan0) + (h * bd.Stride);
                     for (int w = 0; w < width; w++)
                     {// w/step - это определение индекса, находится ли сейчас пиксель в зоне N-го цвета палитры
                         *(curpos++) = palettePixs[w / step][2];
@@ -47,7 +47,7 @@ namespace CBIC.Filters
             {
                 for (int h = 0; h < img.Height; h++)
                 {
-                    byte* curpos = ((byte*)bd.Scan0) + h * bd.Stride;
+                    byte* curpos = ((byte*)bd.Scan0) + (h * bd.Stride);
                     for (int w = 0; w < img.Width; w++)
                     {
                         byte b = *(curpos++);
@@ -74,9 +74,13 @@ namespace CBIC.Filters
         {
             public int Compare(byte[] x, byte[] y)
             {
-                if (x == null || y == null)
+                if (x == null)
                 {
-                    throw new ArgumentNullException("Attempt to compare null byte array.");
+                    throw new ArgumentNullException(nameof(x));
+                }
+                if (y == null)
+                {
+                    throw new ArgumentNullException(nameof(y));
                 }
                 return ((x[0] + x[1] + x[2]) - (y[0] + y[1] + y[2])) / 3;
             }

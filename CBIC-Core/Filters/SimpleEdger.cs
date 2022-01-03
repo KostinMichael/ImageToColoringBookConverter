@@ -24,30 +24,34 @@ namespace CBIC.Filters
             {
                 fixed (byte* rgb = RGBHW)
                 {
-                    byte* r = rgb, g = rgb + width * height, b = rgb + 2 * width * height;
+                    byte* r = rgb,  g = rgb + (width * height),  b = rgb + (2 * (width * height));
                     for (int h = 1; h < height - 1; h++)
                     {
                         for (int w = 1; w < width - 1; w++)
                         {
-                            int right = (RGBHW[0, h, w] - RGBHW[0, h, w + 1])
-                                        + (RGBHW[1, h, w] - RGBHW[1, h, w + 1])
-                                        + (RGBHW[2, h, w] - RGBHW[2, h, w + 1]);
-                            int left = (RGBHW[0, h, w] - RGBHW[0, h, w - 1])
-                                        + (RGBHW[1, h, w] - RGBHW[1, h, w - 1])
-                                        + (RGBHW[2, h, w] - RGBHW[2, h, w - 1]);
-                            int top = (RGBHW[0, h, w] - RGBHW[0, h - 1, w])
-                                      + (RGBHW[1, h, w] - RGBHW[1, h - 1, w])
-                                      + (RGBHW[2, h, w] - RGBHW[2, h - 1, w]);
-                            int bottom = (RGBHW[0, h, w] - RGBHW[0, h + 1, w])
-                                         + (RGBHW[1, h, w] - RGBHW[1, h + 1, w])
-                                         + (RGBHW[2, h, w] - RGBHW[2, h + 1, w]);
+                            int right =  (RGBHW[0, h, w] - RGBHW[0, h, w + 1]) 
+                                       + (RGBHW[1, h, w] - RGBHW[1, h, w + 1]) 
+                                       + (RGBHW[2, h, w] - RGBHW[2, h, w + 1]);
+
+                            int left =   (RGBHW[0, h, w] - RGBHW[0, h, w - 1])
+                                       + (RGBHW[1, h, w] - RGBHW[1, h, w - 1])
+                                       + (RGBHW[2, h, w] - RGBHW[2, h, w - 1]);
+
+                            int top =    (RGBHW[0, h, w] - RGBHW[0, h - 1, w])
+                                       + (RGBHW[1, h, w] - RGBHW[1, h - 1, w])
+                                       + (RGBHW[2, h, w] - RGBHW[2, h - 1, w]);
+
+                            int bottom = (RGBHW[0, h, w] - RGBHW[0, h + 1, w]) 
+                                       + (RGBHW[1, h, w] - RGBHW[1, h + 1, w])
+                                       + (RGBHW[2, h, w] - RGBHW[2, h + 1, w]);
                             if (right + left + top + bottom == 0)
                             {
                                 //текущий пиксель становится цветным если все вокруг похожи на него
-                                byte* curpos = (w * 3) + (((byte*)bd.Scan0) + h * bd.Stride);
-                                *(curpos++) = *(b + width * h + w);
-                                *(curpos++) = *(g + width * h + w);
-                                *(curpos) = *(r + width * h + w);
+                                byte* curpos = (w * 3) + (((byte*)bd.Scan0) + (h * bd.Stride));
+                                int shift = (width * h) + w;
+                                *(curpos++) = *(b + shift);
+                                *(curpos++) = *(g + shift);
+                                *(curpos) = *(r + shift);
                             }
                         }
                         notifier.ProgressStep();
@@ -69,10 +73,10 @@ namespace CBIC.Filters
             {
                 fixed (byte* res = RGBHW)
                 {
-                    byte* r = res, g = res + width * height, b = res + 2 * width * height;
+                    byte* r = res, g = res + (width * height), b = res + (2 * (width * height));
                     for (int h = 0; h < height; h++)
                     {
-                        var curpos = ((byte*)bd.Scan0) + h * bd.Stride;
+                        var curpos = ((byte*)bd.Scan0) + (h * bd.Stride);
                         for (int w = 0; w < width; w++)
                         {
                             *b = *(curpos++);

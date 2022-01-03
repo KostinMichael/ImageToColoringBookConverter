@@ -27,7 +27,7 @@ namespace CBIC.Quantizers
                 int k = 0;
                 for (int h = 0; h < img.Height; h++)
                 {
-                    byte* curpos = ((byte*)bd.Scan0) + h * bd.Stride;
+                    byte* curpos = ((byte*)bd.Scan0) + (h * bd.Stride);
                     for (int w = 0; w < img.Width; w++)
                     {
                         byte b = *(curpos++);
@@ -52,8 +52,8 @@ namespace CBIC.Quantizers
             int rgBpices = 4 + conventPaletteSize;
             //сколько раз по кругу резать r g b при N шагах (палитра 2^n)
             int[] rgbDividers = {
-                metaPixels.Length / (rgBpices / 3 + (((rgBpices % 3) + 1) / 2)),
-                metaPixels.Length / (rgBpices / 3 + (((rgBpices % 3) + 1) / 3)),
+                metaPixels.Length / ((rgBpices / 3) + (((rgBpices % 3) + 1) / 2)),
+                metaPixels.Length / ((rgBpices / 3) + (((rgBpices % 3) + 1) / 3)),
                 metaPixels.Length / (rgBpices / 3)
             };
             //циклический сдвиг значений вправо, если опроный цвет второй или третий
@@ -97,7 +97,7 @@ namespace CBIC.Quantizers
             {
                 foreach (MetaPixel metaPixel in metaPixels)
                 {
-                    byte* curpos = (metaPixel.WidthPos * 3) + (((byte*)bd.Scan0) + metaPixel.HeightPos * bd.Stride);
+                    byte* curpos = (metaPixel.WidthPos * 3) + (((byte*)bd.Scan0) + (metaPixel.HeightPos * bd.Stride));
                     *(curpos++) = metaPixel.RGBbuf[2].Clr; //Blue
                     *(curpos++) = metaPixel.RGBbuf[1].Clr; //Green
                     *(curpos) = metaPixel.RGBbuf[0].Clr; //Red
@@ -112,7 +112,7 @@ namespace CBIC.Quantizers
         public byte PaletteSize(byte conventPaletteSize)
         {
             int triple = (conventPaletteSize + 4) / 3;
-            int mod = (conventPaletteSize + 4) % 3 + 1;
+            int mod = ((conventPaletteSize + 4) % 3) + 1;
             return (byte)((triple + (mod / 2)) * (triple + (mod / 3)) * triple);
         }
         class RGBComparer : IComparer<MetaPixel>
@@ -124,9 +124,13 @@ namespace CBIC.Quantizers
             }
             public int Compare(MetaPixel x, MetaPixel y)
             {
-                if (x == null || y == null)
+                if (x == null)
                 {
-                    throw new ArgumentNullException("Attempt to compare null Metapixel.");
+                    throw new ArgumentNullException(nameof(x));
+                }
+                if (y == null)
+                {
+                    throw new ArgumentNullException(nameof(y));
                 }
                 return x.RGB[_colorIndex] - y.RGB[_colorIndex];
             }

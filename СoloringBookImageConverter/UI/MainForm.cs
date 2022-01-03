@@ -104,7 +104,6 @@ namespace СoloringBookImageConverter.UI
                 trbMinSquare.Enabled = false;
                 trbPaletteSize.Enabled = false;
             }));
-
         }
         public void UnBlockElements()
         {
