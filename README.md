@@ -17,4 +17,6 @@ Reworked core achitecture to MVP and created basic functions: quantizing and edg
 ## Project setup
 -todo
 ## [Future scope](https://github.com/KostinMichael/ImageToColoringBookConverter/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement)
+- Additional quantization algorithms
+- Migrate to WPF
 ## [Contributions are Welcome](https://github.com/KostinMichael/ImageToColoringBookConverter/blob/master/CONTRIBUTING.md)
