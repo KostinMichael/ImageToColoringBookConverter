@@ -3,8 +3,8 @@ using System.Drawing;
 using CBIC.Common;
 using СoloringBookImageConverter.Common;
 
-namespace СoloringBookImageConverter.UI.Views {
-    interface IMainView : IView, INotifier{
+namespace СoloringBookImageConverter.UI {
+    interface IMainView : IView{
         void SetOriginalImage(Bitmap bitmap);
         void SetSimplifiedImage(Bitmap bitmap);
         void SetResultImage(Bitmap bitmap);

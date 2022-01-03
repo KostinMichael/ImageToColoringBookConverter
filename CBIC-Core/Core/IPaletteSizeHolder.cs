@@ -1,4 +1,4 @@
-﻿namespace CBIC.Quantizers {
+﻿namespace CBIC.Core {
     /// <summary>
     /// Bridge between conventional units of UI trackbar and quantizer units
     /// </summary>
@@ -13,8 +13,8 @@
         byte ConventMaxPaletteSize { get; }
         /// <summary>
         /// Internal units for the quantization algorithm.
-        /// Typicaly used in trackbar info label
+        /// Typical used in trackbar info label
         /// </summary>
-        byte PaletteSize { get; }
+        byte RealPaletteSize { get; }
     }
 }

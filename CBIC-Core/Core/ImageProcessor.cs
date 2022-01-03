@@ -3,54 +3,55 @@ using System.Drawing;
 using CBIC.Common;
 using CBIC.Filters;
 using CBIC.Quantizers;
-namespace CBIC.Core {
-    public class ImageProcessor : IProcessor {
+namespace CBIC.Core
+{
+    public class ImageProcessor : IPaletteSizeHolder
+    {
         private Bitmap _originalImg, _simpleImg, _resultImg;
         private readonly INotifier _notifier;
         private readonly IQuantizer _quantizer;
         private readonly IFilter _simpleEdger;
         private readonly IFilter _paletteExtractor;
-        /// <inheritdoc />
-        public IPaletteSizeHolder PaletteSize => _quantizer;
-        /// <inheritdoc />
+        private byte _conventPaletteSize;
+        public byte ConventPaletteSize { set => _conventPaletteSize = value; }
+        public byte ConventMaxPaletteSize => 6;
         /// <summary>
-        /// When new one image seted all other old will be replaced
+        /// ConventPaletteSize [0, 1, 2... max] == PaletteSize [2, 4, 8, 12, 18, 27, 36]
         /// </summary>
-        public Bitmap OriginalImg {
+        public byte RealPaletteSize => _quantizer.PaletteSize(_conventPaletteSize);
+        public Bitmap OriginalImg
+        {
             get => _originalImg;
             set => _originalImg = _simpleImg = _resultImg = value;
         }
-        /// <inheritdoc />
         public Bitmap SimpleImg => _simpleImg;
-        /// <inheritdoc />
         public Bitmap ResultImg => _resultImg;
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ImageProcessor"/> class.
-        /// </summary>
-        /// <param name="notifier">Progress informer. For mocking just use DebugNotifie</param>
-        /// <param name="quantizer">The quantizer.</param>
-        /// <param name="simpleEdger">The simple edger.</param>
-        /// <param name="paletteExtractor">The palette extractor.</param>
-        public ImageProcessor(INotifier notifier, IQuantizer quantizer, IFilter simpleEdger, IFilter paletteExtractor) {
+        public ImageProcessor(INotifier notifier)
+        {
             _notifier = notifier;
-            _quantizer = quantizer;
-            _simpleEdger = simpleEdger;
-            _paletteExtractor = paletteExtractor;
+            _quantizer = new WeightedAverageQuantizer();
+            _simpleEdger = new SimpleEdger();
+            _paletteExtractor = new PaletteExtractor();
         }
-        /// <inheritdoc />
-        public void ProcessImage() {
-            if (_originalImg != null) {
-                _simpleImg = _quantizer.GetSimplifiedImg(_originalImg, MajorColor.R, _notifier); //todo create trackbar for selecting major color
+
+        public void ProcessImage()
+        {
+            if (_originalImg != null)
+            {
+                _simpleImg = _quantizer.GetSimplifiedImg(_originalImg, MajorColor.R, _conventPaletteSize, _notifier); //todo create trackbar for selecting major color
                 _resultImg = _simpleEdger.FilteredImg(SimpleImg, _notifier);
                 //todo create picturebox for palette image
                 //_resultImg = _paletteExtractor.FilteredImg(_simpleImg, _notifier); 
             }
         }
-        /// <inheritdoc />
-        public void UpdateImage(string imagePath) {
-            try {
+        public void UpdateImage(string imagePath)
+        {
+            try
+            {
                 _originalImg = new Bitmap(imagePath);
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 _notifier.ShowMessage("Error opening file!\n\n" + e.Message + "\n\n" + imagePath);
             }
         }

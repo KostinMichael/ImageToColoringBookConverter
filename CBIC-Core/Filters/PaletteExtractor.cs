@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq;
@@ -7,12 +7,6 @@ using CBIC.Common;
 
 namespace CBIC.Filters {
     public class PaletteExtractor : IFilter {
-        /// <summary>
-        /// Image filter.
-        /// </summary>
-        /// <param name="img">Filtered image.</param>
-        /// <param name="notifier">Filtering process notifier.</param>
-        /// <returns>Filtered image.</returns>
         public unsafe Bitmap FilteredImg(Bitmap img, INotifier notifier) {
             List<byte[]> palettePixs = PalettePixelsFromImage(img);
             palettePixs.Sort(new RGBComparer());
@@ -37,11 +31,7 @@ namespace CBIC.Filters {
             }
             return paletteImage;
         }
-        /// <summary>
-        /// Palettes the pixels from image.
-        /// </summary>
-        /// <param name="img">The img.</param>
-        /// <returns></returns>
+
         private unsafe List<byte[]> PalettePixelsFromImage(Bitmap img) {
             List<byte[]> pixels = new List<byte[]>();
             BitmapData bd = img.LockBits(new Rectangle(0, 0, img.Width, img.Height),
@@ -63,11 +53,12 @@ namespace CBIC.Filters {
             return pixels;
         }
         /// <summary>
-        /// Compares two colors on gray scale
+        /// Comparison of two colors by gray scale
         /// </summary>
-        /// <seealso cref="System.Collections.Generic.IComparer&lt;System.Byte[]&gt;" />
         class RGBComparer : IComparer<byte[]> {
-            public int Compare(byte[] x, byte[] y) {
+            public int Compare(byte[] x, byte[] y)
+            {
+                if(x == null | y == null) throw new NullReferenceException();
                 return ((x[0] + x[1] + x[2]) / 3) - ((y[0] + y[1] + y[2]) / 3);
             }
         }

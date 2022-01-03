@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using СoloringBookImageConverter.Common;
 using СoloringBookImageConverter.Properties;
-using СoloringBookImageConverter.UI.Views;
 
 namespace СoloringBookImageConverter.UI {
     //для листа А4 рекомендуется ариал-8   гдето- 25х25 пикселей

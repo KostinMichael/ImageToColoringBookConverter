@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace CBIC.Quantizers {
+﻿namespace CBIC.Quantizers {
     /// <summary>
     /// byte[3] RGB  {256,256,256}
     /// </summary>

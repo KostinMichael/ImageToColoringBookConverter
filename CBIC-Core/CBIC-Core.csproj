@@ -44,12 +44,12 @@
     <Compile Include="Filters\SimpleEdger.cs" />
     <Compile Include="Filters\IFilter.cs" />
     <Compile Include="Core\ImageProcessor.cs" />
-    <Compile Include="Core\IProcessor.cs" />
     <Compile Include="Common\INotifier.cs" />
     <Compile Include="Filters\PaletteExtractor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Quantizers\ColorHolder.cs" />
-    <Compile Include="Quantizers\IPaletteSizeHolder.cs" />
+    <Compile Include="Core\IPaletteSizeHolder.cs" />
+    <Compile Include="Quantizers\IPaletteUnitsConverter.cs" />
     <Compile Include="Quantizers\IQuantizer.cs" />
     <Compile Include="Quantizers\MetaPixel.cs" />
     <Compile Include="Quantizers\WeightedAverageQuantizer.cs" />

@@ -1,16 +1,13 @@
 ﻿using System;
 using System.ComponentModel;
-using CBIC.Common;
 using CBIC.Core;
-using CBIC.Filters;
-using CBIC.Quantizers;
 using СoloringBookImageConverter.Common;
-using СoloringBookImageConverter.UI.Views;
+using СoloringBookImageConverter.UI;
 
 namespace СoloringBookImageConverter.Presenters {
-    class MainPresenter : IPresenter, INotifier {
+    class MainPresenter : IPresenter {
         private readonly IMainView _mainForm;
-        private readonly IProcessor _imageProcessor;
+        private readonly ImageProcessor _imageProcessor;
         private readonly BackgroundWorker _bwImageProcess = new BackgroundWorker();
         public MainPresenter(IMainView view) {
             _mainForm = view;
@@ -22,13 +19,13 @@ namespace СoloringBookImageConverter.Presenters {
             mainForm.MinSquareChanged += MinSquareChanged;*/
             _bwImageProcess.DoWork += DoWorkProcessImage;
             _bwImageProcess.RunWorkerCompleted += ViewImageUpdate;
-            _imageProcessor = new ImageProcessor(this, new WeightedAverageQuantizer(),new SimpleEdger(), new PaletteExtractor());
-            _mainForm.SetPaletteMaxSize(_imageProcessor.PaletteSize.ConventMaxPaletteSize);
+            _imageProcessor = new ImageProcessor(_mainForm);
+            _mainForm.SetPaletteMaxSize(_imageProcessor.ConventMaxPaletteSize);
         }
         public void PaletteSizeChanged(Object sender, TrackBarEventArgs e)
         {
-            _imageProcessor.PaletteSize.ConventPaletteSize = e.Value;
-            _mainForm.SetPaletteSizeInfo(_imageProcessor.PaletteSize.PaletteSize);
+            _imageProcessor.ConventPaletteSize = e.Value;
+            _mainForm.SetPaletteSizeInfo(_imageProcessor.RealPaletteSize);
         }
         public void ProcessImage(object sender, EventArgs e) {
             _bwImageProcess.RunWorkerAsync();
@@ -41,15 +38,6 @@ namespace СoloringBookImageConverter.Presenters {
         public void ImagePathChanged(Object sender, ImagePathEventArgs e) {
             _imageProcessor.UpdateImage(e.FilePath);
             _bwImageProcess.RunWorkerAsync();
-        }
-        public void ShowMessage(string text) {
-            _mainForm.ShowMessage(text);
-        }
-        public void SetupProgress(int maxValue, int step) {
-            _mainForm.SetupProgress(maxValue, step);
-        }
-        public void ProgressStep() {
-            _mainForm.ProgressStep();
         }
         public void Run() {
             _mainForm.Showy();

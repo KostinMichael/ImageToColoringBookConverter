@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using CBIC.Common;
@@ -10,36 +9,11 @@ namespace CBIC.Quantizers {
     /// Format24bppRgb
     /// </summary>
     public class WeightedAverageQuantizer : IQuantizer {
-        private byte _conventPaletteSize;
-        /// <inheritdoc />
-        public byte ConventPaletteSize { set => _conventPaletteSize = value; }
-        /// <inheritdoc />
-        public byte ConventMaxPaletteSize => 6;
-        /// <summary>
-        /// ConventPaletteSize [0, 1, 2... max] == PaletteSize [2, 4, 8, 12, 18, 27, 36]
-        /// </summary>
-        public byte PaletteSize {
-            get {
-                int triple = (_conventPaletteSize + 4) / 3;
-                int mod = (((_conventPaletteSize + 4) % 3) + 1);
-                return (byte)((triple + (mod / 2)) * (triple + (mod / 3)) * triple);
-            }
-        }
-        /// <summary>
-        /// <param name="majorColor">
-        ///     С какого цвета начнётся отсчёт {0, 1, 2}. При нечётном кол-ве кусочков третьему "недостанется" одного.
-        ///     Например при _majorColor = 0 и 5 кусочкам, у R будет 2, у G будет 2, у B будет 1,
-        /// </param> 
-        /// </summary>
-        public Bitmap GetSimplifiedImg(Bitmap img, MajorColor majorColor, INotifier notifier) {
+        public Bitmap GetSimplifiedImg(Bitmap img, MajorColor majorColor, byte conventPaletteSize, INotifier notifier) {
             MetaPixel[] metaPixels = BitmapToMetaPixels(img);
-            metaPixels = QuantizeMetaPixels(metaPixels, majorColor, notifier);
+            metaPixels = QuantizeMetaPixels(metaPixels, conventPaletteSize, majorColor, notifier);
             return MetaPixelsToBitmap(metaPixels, img.Width, img.Height);
         }
-        /// <summary>
-        /// <param name="conventSize">условный размер палитры 0..maxSize</param>
-        /// </summary>
-        /// <returns>реальный размер палитры: 2^(n-3), где n = value + 4</returns> 
         private unsafe MetaPixel[] BitmapToMetaPixels(Bitmap img) {
             MetaPixel[] mPixels = new MetaPixel[img.Width * img.Height];
             BitmapData bd = img.LockBits(new Rectangle(0, 0, img.Width, img.Height),
@@ -60,19 +34,13 @@ namespace CBIC.Quantizers {
             }
             return mPixels;
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="metaPixels"></param>
-        /// <param name="conventPaletteSize"></param>
-        /// <param name="majorColor"></param>
-        /// <param name="notifier"></param>
-        /// <returns></returns>
-        private MetaPixel[] QuantizeMetaPixels(MetaPixel[] metaPixels, MajorColor majorColor, INotifier notifier) {
+        private MetaPixel[] QuantizeMetaPixels(MetaPixel[] metaPixels, byte conventPaletteSize,
+            MajorColor majorColor, INotifier notifier)
+        {
             notifier.SetupProgress(3, 1);
             //Кол-во "кусочков" для резки rgb куба. Трекбар должен начинаться от нуля.
             //Кусочки: 4 5 6 7 8 9 10 == кол-ву цветов в палитре: 2 4 8 12 18 27 36
-            int rgBpices = 4 + _conventPaletteSize;
+            int rgBpices = 4 + conventPaletteSize;
             //сколько раз по кругу резать r g b при N шагах (палитра 2^n)
             int[] rgbDividers = {
                 metaPixels.Length / (rgBpices / 3 + (((rgBpices % 3) + 1) / 2)),
@@ -87,13 +55,11 @@ namespace CBIC.Quantizers {
             };
             ColorHolder avrgColor = new ColorHolder();
             long sumWeight = 0, numerator = 0;
-            Debug.WriteLine("==============================");
             for (int colorIndex = 0; colorIndex < 3; colorIndex++) { //r g b
                 Array.Sort(metaPixels, new RGBComparer(colorIndex));
                 for (int i = 0; i < metaPixels.Length; i++) {
                     metaPixels[i].RGBbuf[colorIndex] = avrgColor; //кинул ссылку на цвет в rgbbuffer
                     numerator += metaPixels[i].RGB[colorIndex]; //числитель есть индекс цвета * частоту т.е. {17*2 + 18*2} = {17 + 17 + 18 +18}
-                    //Debug.WriteLine("numerator=" + numerator + "  color=" + metaPixels[i].RGB[colorIndex]);
                     sumWeight++; //сумма частот т.е. {17,17,18,18} = 4
                     if (sumWeight == dividingSteps[colorIndex] | i == metaPixels.Length - 1) {
                         int weightedAverage = (int)(numerator / sumWeight);
@@ -103,18 +69,10 @@ namespace CBIC.Quantizers {
                         sumWeight = numerator = 0;
                     }
                 }
-                Array.Sort(metaPixels, new RGBComparer(0));
                 notifier.ProgressStep();
             }
             return metaPixels;
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="metaPixels"></param>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
-        /// <returns></returns>
         private unsafe Bitmap MetaPixelsToBitmap(MetaPixel[] metaPixels, int width, int height) {
             Bitmap bitmap = new Bitmap(width, height, PixelFormat.Format24bppRgb);
             BitmapData bd = bitmap.LockBits(
@@ -131,16 +89,19 @@ namespace CBIC.Quantizers {
             }
             return bitmap;
         }
-        /// <summary>
-        /// 
-        /// </summary>
+        public byte PaletteSize(byte conventPaletteSize)
+        {
+            int triple = (conventPaletteSize + 4) / 3;
+            int mod = (((conventPaletteSize + 4) % 3) + 1);
+            return (byte)((triple + (mod / 2)) * (triple + (mod / 3)) * triple);
+        }
         class RGBComparer : IComparer<MetaPixel> {
             private readonly int _colorIndex;
             public RGBComparer(int colorIndex) {
                 _colorIndex = colorIndex;
             }
-
             public int Compare(MetaPixel x, MetaPixel y) {
+                if (x == null | y == null) throw new NullReferenceException();
                 int res = x.RGB[_colorIndex] - y.RGB[_colorIndex];
                 int res2 = x.RGB[(_colorIndex + 1) % 3] - y.RGB[(_colorIndex + 1) % 3];
                 int res3 = x.RGB[(_colorIndex + 2) % 3] - y.RGB[(_colorIndex + 2) % 3];
