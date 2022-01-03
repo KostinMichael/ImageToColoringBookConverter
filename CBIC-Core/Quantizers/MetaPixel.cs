@@ -14,7 +14,7 @@
             RGBbuf = new ColorHolder[3];
         }
         public override string ToString() {
-            return RGB[0] + "," + RGB[1] + "," + RGB[2] + "}  {" + RGBbuf[0] + "," + RGBbuf[1] + "," + RGBbuf[2];
+            return " {" + RGB[0] + "," + RGB[1] + "," + RGB[2] + "}  {" + RGBbuf[0] + "," + RGBbuf[1] + "," + RGBbuf[2] + "} ";
         }
     }
 }

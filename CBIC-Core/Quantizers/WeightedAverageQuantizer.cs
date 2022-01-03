@@ -4,32 +4,41 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using CBIC.Common;
 
-namespace CBIC.Quantizers {
+namespace CBIC.Quantizers
+{
     /// <summary>
     /// Format24bppRgb
     /// </summary>
-    public class WeightedAverageQuantizer : IQuantizer {
-        public Bitmap GetSimplifiedImg(Bitmap img, MajorColor majorColor, byte conventPaletteSize, INotifier notifier) {
+    public class WeightedAverageQuantizer : IQuantizer
+    {
+        public Bitmap GetSimplifiedImg(Bitmap img, MajorColor majorColor, byte conventPaletteSize, INotifier notifier)
+        {
             MetaPixel[] metaPixels = BitmapToMetaPixels(img);
             metaPixels = QuantizeMetaPixels(metaPixels, conventPaletteSize, majorColor, notifier);
             return MetaPixelsToBitmap(metaPixels, img.Width, img.Height);
         }
-        private unsafe MetaPixel[] BitmapToMetaPixels(Bitmap img) {
+        private unsafe MetaPixel[] BitmapToMetaPixels(Bitmap img)
+        {
             MetaPixel[] mPixels = new MetaPixel[img.Width * img.Height];
             BitmapData bd = img.LockBits(new Rectangle(0, 0, img.Width, img.Height),
                 ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
-            try {
+            try
+            {
                 int k = 0;
-                for (int h = 0; h < img.Height; h++) {
+                for (int h = 0; h < img.Height; h++)
+                {
                     byte* curpos = ((byte*)bd.Scan0) + h * bd.Stride;
-                    for (int w = 0; w < img.Width; w++) {
+                    for (int w = 0; w < img.Width; w++)
+                    {
                         byte b = *(curpos++);
                         byte g = *(curpos++);
                         byte r = *(curpos++);
                         mPixels[k++] = new MetaPixel(r, g, b, h, w);
                     }
                 }
-            } finally {
+            }
+            finally
+            {
                 img.UnlockBits(bd);
             }
             return mPixels;
@@ -55,15 +64,21 @@ namespace CBIC.Quantizers {
             };
             ColorHolder avrgColor = new ColorHolder();
             long sumWeight = 0, numerator = 0;
-            for (int colorIndex = 0; colorIndex < 3; colorIndex++) { //r g b
+            for (int colorIndex = 0; colorIndex < 3; colorIndex++)
+            { //r g b
                 Array.Sort(metaPixels, new RGBComparer(colorIndex));
-                for (int i = 0; i < metaPixels.Length; i++) {
+                for (int i = 0; i < metaPixels.Length; i++)
+                {
                     metaPixels[i].RGBbuf[colorIndex] = avrgColor; //кинул ссылку на цвет в rgbbuffer
                     numerator += metaPixels[i].RGB[colorIndex]; //числитель есть индекс цвета * частоту т.е. {17*2 + 18*2} = {17 + 17 + 18 +18}
                     sumWeight++; //сумма частот т.е. {17,17,18,18} = 4
-                    if (sumWeight == dividingSteps[colorIndex] | i == metaPixels.Length - 1) {
+                    if (sumWeight == dividingSteps[colorIndex] || i == metaPixels.Length - 1)
+                    {
                         int weightedAverage = (int)(numerator / sumWeight);
-                        if (weightedAverage > byte.MaxValue) throw new Exception("bad algorithm avrg color byte = " + weightedAverage);
+                        if (weightedAverage > byte.MaxValue)
+                        {
+                            throw new Exception("bad algorithm avrg color byte = " + weightedAverage);
+                        }
                         avrgColor.Clr = (byte)weightedAverage; //все метапиксели, хранящие эту ссылку получают цвет
                         avrgColor = new ColorHolder(); //отсоединяю ссылку
                         sumWeight = numerator = 0;
@@ -73,18 +88,23 @@ namespace CBIC.Quantizers {
             }
             return metaPixels;
         }
-        private unsafe Bitmap MetaPixelsToBitmap(MetaPixel[] metaPixels, int width, int height) {
+        private unsafe Bitmap MetaPixelsToBitmap(MetaPixel[] metaPixels, int width, int height)
+        {
             Bitmap bitmap = new Bitmap(width, height, PixelFormat.Format24bppRgb);
             BitmapData bd = bitmap.LockBits(
                 new Rectangle(0, 0, width, height), ImageLockMode.WriteOnly, PixelFormat.Format24bppRgb);
-            try {
-                foreach (MetaPixel metaPixel in metaPixels) {
+            try
+            {
+                foreach (MetaPixel metaPixel in metaPixels)
+                {
                     byte* curpos = (metaPixel.WidthPos * 3) + (((byte*)bd.Scan0) + metaPixel.HeightPos * bd.Stride);
                     *(curpos++) = metaPixel.RGBbuf[2].Clr; //Blue
                     *(curpos++) = metaPixel.RGBbuf[1].Clr; //Green
                     *(curpos) = metaPixel.RGBbuf[0].Clr; //Red
                 }
-            } finally {
+            }
+            finally
+            {
                 bitmap.UnlockBits(bd);
             }
             return bitmap;
@@ -92,15 +112,18 @@ namespace CBIC.Quantizers {
         public byte PaletteSize(byte conventPaletteSize)
         {
             int triple = (conventPaletteSize + 4) / 3;
-            int mod = (((conventPaletteSize + 4) % 3) + 1);
+            int mod = (conventPaletteSize + 4) % 3 + 1;
             return (byte)((triple + (mod / 2)) * (triple + (mod / 3)) * triple);
         }
-        class RGBComparer : IComparer<MetaPixel> {
+        class RGBComparer : IComparer<MetaPixel>
+        {
             private readonly int _colorIndex;
-            public RGBComparer(int colorIndex) {
+            public RGBComparer(int colorIndex)
+            {
                 _colorIndex = colorIndex;
             }
-            public int Compare(MetaPixel x, MetaPixel y) {
+            public int Compare(MetaPixel x, MetaPixel y)
+            {
                 if (x == null | y == null) throw new NullReferenceException();
                 int res = x.RGB[_colorIndex] - y.RGB[_colorIndex];
                 int res2 = x.RGB[(_colorIndex + 1) % 3] - y.RGB[(_colorIndex + 1) % 3];

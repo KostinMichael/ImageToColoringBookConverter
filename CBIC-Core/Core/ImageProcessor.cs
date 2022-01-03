@@ -13,7 +13,6 @@ namespace CBIC.Core
         private readonly IFilter _simpleEdger;
         private readonly IFilter _paletteExtractor;
         private byte _conventPaletteSize;
-        public byte ConventPaletteSize { set => _conventPaletteSize = value; }
         public byte ConventMaxPaletteSize => 6;
         /// <summary>
         /// ConventPaletteSize [0, 1, 2... max] == PaletteSize [2, 4, 8, 12, 18, 27, 36]
@@ -54,6 +53,10 @@ namespace CBIC.Core
             {
                 _notifier.ShowMessage("Error opening file!\n\n" + e.Message + "\n\n" + imagePath);
             }
+        }
+        public void ConventPaletteSize(byte conventPaletteSize)
+        {
+            _conventPaletteSize = conventPaletteSize;
         }
     }
 }

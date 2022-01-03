@@ -4,12 +4,15 @@ using CBIC.Core;
 using СoloringBookImageConverter.Common;
 using СoloringBookImageConverter.UI;
 
-namespace СoloringBookImageConverter.Presenters {
-    class MainPresenter : IPresenter {
+namespace СoloringBookImageConverter.Presenters
+{
+    class MainPresenter : IPresenter
+    {
         private readonly IMainView _mainForm;
         private readonly ImageProcessor _imageProcessor;
         private readonly BackgroundWorker _bwImageProcess = new BackgroundWorker();
-        public MainPresenter(IMainView view) {
+        public MainPresenter(IMainView view)
+        {
             _mainForm = view;
             _mainForm.ImagePathChanged += ImagePathChanged;
             _mainForm.ProcessImage += ProcessImage;
@@ -24,25 +27,30 @@ namespace СoloringBookImageConverter.Presenters {
         }
         public void PaletteSizeChanged(Object sender, TrackBarEventArgs e)
         {
-            _imageProcessor.ConventPaletteSize = e.Value;
+            _imageProcessor.ConventPaletteSize(e.Value);
             _mainForm.SetPaletteSizeInfo(_imageProcessor.RealPaletteSize);
         }
-        public void ProcessImage(object sender, EventArgs e) {
+        public void ProcessImage(object sender, EventArgs e)
+        {
             _bwImageProcess.RunWorkerAsync();
         }
-        private void DoWorkProcessImage(object sender, DoWorkEventArgs e) {
+        private void DoWorkProcessImage(object sender, DoWorkEventArgs e)
+        {
             _mainForm.BlockElements();
             _imageProcessor.ProcessImage();
             _mainForm.UnBlockElements();
         }
-        public void ImagePathChanged(Object sender, ImagePathEventArgs e) {
+        public void ImagePathChanged(Object sender, ImagePathEventArgs e)
+        {
             _imageProcessor.UpdateImage(e.FilePath);
             _bwImageProcess.RunWorkerAsync();
         }
-        public void Run() {
+        public void Run()
+        {
             _mainForm.Showy();
         }
-        private void ViewImageUpdate(object obj, RunWorkerCompletedEventArgs args) {
+        private void ViewImageUpdate(object obj, RunWorkerCompletedEventArgs args)
+        {
             _mainForm.SetOriginalImage(_imageProcessor.OriginalImg);
             _mainForm.SetSimplifiedImage(_imageProcessor.SimpleImg);
             _mainForm.SetResultImage(_imageProcessor.ResultImg);
