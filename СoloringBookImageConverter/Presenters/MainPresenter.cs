@@ -17,17 +17,14 @@ namespace СoloringBookImageConverter.Presenters
             _mainForm.ImagePathChanged += ImagePathChanged;
             _mainForm.ProcessImage += ProcessImage;
             _mainForm.PaletteSizeChanged += PaletteSizeChanged;
-            /*mainForm.BlurDegreeChanged += BlurDegreeChanged;
-            mainForm.LineThicknessChanged += LineThicknessChanged;
-            mainForm.MinSquareChanged += MinSquareChanged;*/
             _bwImageProcess.DoWork += DoWorkProcessImage;
             _bwImageProcess.RunWorkerCompleted += ViewImageUpdate;
             _imageProcessor = new ImageProcessor(_mainForm);
-            _mainForm.SetPaletteMaxSize(_imageProcessor.ConventMaxPaletteSize);
+            _mainForm.SetPaletteMaxSize(_imageProcessor.MaxConventPaletteSize);
         }
         public void PaletteSizeChanged(Object sender, TrackBarEventArgs e)
         {
-            _imageProcessor.ConventPaletteSize(e.Value);
+            _imageProcessor.SetConventPaletteSize(e.Value);
             _mainForm.SetPaletteSizeInfo(_imageProcessor.RealPaletteSize);
         }
         public void ProcessImage(object sender, EventArgs e)
@@ -55,23 +52,5 @@ namespace СoloringBookImageConverter.Presenters
             _mainForm.SetSimplifiedImage(_imageProcessor.SimpleImg);
             _mainForm.SetResultImage(_imageProcessor.ResultImg);
         }
-        /*public void MinSquareChanged(Object sender, TrackBarEventArgs e) {
-            if (e.Value < 1) {
-                throw new ArgumentException("'MinSquareChanged' value cannot be zero");
-            }
-            minSquare = e.Value;
-        }
-        public void LineThicknessChanged(Object sender, TrackBarEventArgs e) {
-            if (e.Value < 1) {
-                throw new ArgumentException("'LineThickness' value cannot be zero");
-            }
-            lineThickness = e.Value;
-        }
-        public void BlurDegreeChanged(Object sender, TrackBarEventArgs e) {
-            if (e.Value < 0) {
-                throw new ArgumentException("'blur' value cannot be negative");
-            }
-            blurDegree = e.Value;
-        }*/
     }
 }

@@ -19,14 +19,12 @@ namespace CBIC.Filters
                 ImageLockMode.WriteOnly, PixelFormat.Format24bppRgb);
             try
             {
-                int step = width / paletteSize;
+                int step = width / paletteSize; //ширина одной клеточки палитры
                 for (int h = 0; h < height; h++)
                 {
                     byte* curpos = ((byte*)bd.Scan0) + h * bd.Stride;
                     for (int w = 0; w < width; w++)
-                    {
-                        //(w/step) - это определение индекса, находится ли сейчас пиксель
-                        //в зоне N-го цвета палитры, где ширина зоны определяется как step = imgWidth / paletteSize;
+                    {// w/step - это определение индекса, находится ли сейчас пиксель в зоне N-го цвета палитры
                         *(curpos++) = palettePixs[w / step][2];
                         *(curpos++) = palettePixs[w / step][1];
                         *(curpos++) = palettePixs[w / step][0];
@@ -76,8 +74,8 @@ namespace CBIC.Filters
         {
             public int Compare(byte[] x, byte[] y)
             {
-                if (x == null | y == null) throw new NullReferenceException();
-                return ((x[0] + x[1] + x[2]) / 3) - ((y[0] + y[1] + y[2]) / 3);
+                if (x == null || y == null) throw new ArgumentNullException("Attempt to compare null byte array.");
+                return ((x[0] + x[1] + x[2]) - (y[0] + y[1] + y[2])) / 3;
             }
         }
     }

@@ -13,9 +13,9 @@ namespace CBIC.Core
         private readonly IFilter _simpleEdger;
         private readonly IFilter _paletteExtractor;
         private byte _conventPaletteSize;
-        public byte ConventMaxPaletteSize => 6;
+        public byte MaxConventPaletteSize => 6;
         /// <summary>
-        /// ConventPaletteSize [0, 1, 2... max] == PaletteSize [2, 4, 8, 12, 18, 27, 36]
+        /// SetConventPaletteSize [0, 1, 2... max] equal PaletteSize [2, 4, 8, 12, 18, 27, 36]
         /// </summary>
         public byte RealPaletteSize => _quantizer.PaletteSize(_conventPaletteSize);
         public Bitmap OriginalImg
@@ -37,7 +37,8 @@ namespace CBIC.Core
         {
             if (_originalImg != null)
             {
-                _simpleImg = _quantizer.GetSimplifiedImg(_originalImg, MajorColor.R, _conventPaletteSize, _notifier); //todo create trackbar for selecting major color
+                //todo create trackbar for selecting major color
+                _simpleImg = _quantizer.GetSimplifiedImg(_originalImg, MajorColor.R, _conventPaletteSize, _notifier); 
                 _resultImg = _simpleEdger.FilteredImg(SimpleImg, _notifier);
                 //todo create picturebox for palette image
                 //_resultImg = _paletteExtractor.FilteredImg(_simpleImg, _notifier); 
@@ -54,7 +55,7 @@ namespace CBIC.Core
                 _notifier.ShowMessage("Error opening file!\n\n" + e.Message + "\n\n" + imagePath);
             }
         }
-        public void ConventPaletteSize(byte conventPaletteSize)
+        public void SetConventPaletteSize(byte conventPaletteSize)
         {
             _conventPaletteSize = conventPaletteSize;
         }

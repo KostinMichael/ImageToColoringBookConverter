@@ -77,7 +77,7 @@ namespace CBIC.Quantizers
                         int weightedAverage = (int)(numerator / sumWeight);
                         if (weightedAverage > byte.MaxValue)
                         {
-                            throw new Exception("bad algorithm avrg color byte = " + weightedAverage);
+                            throw new InvalidCastException("Integer to Byte conversion overflow: " + weightedAverage);
                         }
                         avrgColor.Clr = (byte)weightedAverage; //все метапиксели, хранящие эту ссылку получают цвет
                         avrgColor = new ColorHolder(); //отсоединяю ссылку
@@ -124,11 +124,13 @@ namespace CBIC.Quantizers
             }
             public int Compare(MetaPixel x, MetaPixel y)
             {
-                if (x == null | y == null) throw new NullReferenceException();
-                int res = x.RGB[_colorIndex] - y.RGB[_colorIndex];
+                if (x == null || y == null) throw new ArgumentNullException("Attempt to compare null Metapixel.");
+                return x.RGB[_colorIndex] - y.RGB[_colorIndex];
+                /* experimental triple sorting
+                 int res = x.RGB[_colorIndex] - y.RGB[_colorIndex];
                 int res2 = x.RGB[(_colorIndex + 1) % 3] - y.RGB[(_colorIndex + 1) % 3];
                 int res3 = x.RGB[(_colorIndex + 2) % 3] - y.RGB[(_colorIndex + 2) % 3];
-                return res == 0 ? (res2 == 0 ? res3 : res2) : res;
+                return res == 0 ? (res2 == 0 ? res3 : res2) : res;*/
             }
         }
     }
