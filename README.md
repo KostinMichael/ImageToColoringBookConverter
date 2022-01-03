@@ -6,7 +6,7 @@ Reworked core achitecture to MVP and created basic functions: quantizing and edg
 ### Requirements
 - .NET 4.6.1
 ### Project statistics
-- ~1k rows
+- ~1k code lines
 
 | Codacy | Codefactor |
 | - | - |
